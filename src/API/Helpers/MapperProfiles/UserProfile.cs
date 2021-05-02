@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using API.Dto;
+using AutoMapper;
+using Core.Entities.Identity;
 
 namespace API.Helpers.MapperProfiles
 {
@@ -6,7 +8,7 @@ namespace API.Helpers.MapperProfiles
     {
 		public UserProfile()
 		{
-			
+			CreateMap<RegisterDto, User>();
 		}
     }
 }
