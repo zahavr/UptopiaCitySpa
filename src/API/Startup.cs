@@ -40,11 +40,9 @@ namespace API
         {
             app.UseMiddleware<ExceptionMiddleware>();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwaggerDocumentation();
-            }
+            app.UseStatusCodePagesWithReExecute("/errors/{0}");
+
+            app.UseSwaggerDocumentation();
 
             app.UseHttpsRedirection();
 
