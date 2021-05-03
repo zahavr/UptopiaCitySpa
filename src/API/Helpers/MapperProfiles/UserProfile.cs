@@ -8,7 +8,8 @@ namespace API.Helpers.MapperProfiles
     {
 		public UserProfile()
 		{
-			CreateMap<RegisterDto, User>();
+			CreateMap<RegisterDto, User>()
+				.ForMember(u => u.UserName, opt => opt.MapFrom(ur => ur.Login));
 		}
     }
 }

@@ -21,7 +21,10 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSwaggerDocumentation();
-            var str = _configuration.GetConnectionString("IdentityConnection");
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "../client/dist";
+            });
             services.AddDbContext<AppIdentityDbContext>(db =>
             {
                 db.UseSqlServer(_configuration.GetConnectionString("IdentityConnection"));
@@ -53,6 +56,13 @@ namespace API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "../client";
+
+                spa.UseProxyToSpaDevelopmentServer("https://localhost:4200");
             });
         }
     }

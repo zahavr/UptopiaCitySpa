@@ -1,8 +1,8 @@
-export const Url = {
+export const ApiUrl = {
   Account: {
-    Register: 'api/register',
-    Login: 'api/login',
-    CurrentUser: 'api/current-user',
-    EmailExists: 'api/emailexists'
+    Register: 'api/account/register',
+    Login: 'api/account/login',
+    CurrentUser: 'api/account/current-user',
+    EmailExists: 'api/account/emailexists?email=:email'
   }
 };
