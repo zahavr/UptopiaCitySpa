@@ -5,6 +5,7 @@ import {Observable, of, ReplaySubject} from 'rxjs';
 import {ApiUrl} from '../shared/constants/shared.url.constants';
 import {IUser} from '../shared/interfaces/user.interface';
 import {map} from 'rxjs/operators';
+import {IUserProfile} from '../shared/interfaces/user-profile.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -40,16 +41,8 @@ export class AccountService {
     );
   }
 
-  loadCurrentUser(token: string): Observable<any> {
-    if (token === null) {
-      this.currentUserSource.next(null);
-      return of(null);
-    }
-
-    let headers = new HttpHeaders();
-    headers = headers.set('Authorization', `Bearer ${token}`);
-
-    return  this.http.get(this.baseUrl + ApiUrl.Account.CurrentUser, {headers}).pipe(
+  loadCurrentUser(): Observable<any> {
+    return this.http.get(this.baseUrl + ApiUrl.Account.CurrentUser).pipe(
       map((user: IUser) => {
         if (user) {
           localStorage.setItem('token', user.token);

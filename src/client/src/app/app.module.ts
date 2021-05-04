@@ -8,6 +8,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HomeModule} from './home/home.module';
 import {CoreModule} from './core/core.module';
 import {ErrorInterceptor} from './core/interceptors/error.interceptor';
+import {PersonalCabinetModule} from './personal-cabinet/personal-cabinet.module';
+import {JwtInterceptor} from './core/interceptors/jwt.interceptor';
 
 
 @NgModule({
@@ -20,9 +22,11 @@ import {ErrorInterceptor} from './core/interceptors/error.interceptor';
     BrowserAnimationsModule,
     HttpClientModule,
     CoreModule,
-    HomeModule
+    HomeModule,
+    PersonalCabinetModule
   ],
   providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]

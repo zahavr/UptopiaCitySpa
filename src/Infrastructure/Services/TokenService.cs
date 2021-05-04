@@ -25,7 +25,7 @@ namespace Infrastructure.Services
 		{
 			List<Claim> claims = new List<Claim> {
 				new Claim(JwtRegisteredClaimNames.Email, user.Email),
-				new Claim(JwtRegisteredClaimNames.Name, user.UserName)
+				new Claim(JwtRegisteredClaimNames.Name, user.UserName),
 			};
 
 			SigningCredentials creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);

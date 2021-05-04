@@ -18,7 +18,6 @@ namespace API.Extensions
 			builder = new IdentityBuilder(builder.UserType, builder.Services);
 			builder.AddEntityFrameworkStores<AppIdentityDbContext>();
 			builder.AddSignInManager<SignInManager<User>>();
-
 			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 			.AddJwtBearer(opt =>
 			{
@@ -27,7 +26,7 @@ namespace API.Extensions
 					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:Key"])),
 					ValidateIssuerSigningKey = true,
 					ValidIssuer = configuration["Token:Issuer"],
-					ValidateIssuer = true,
+					ValidateIssuer = false,
 					ValidateAudience = false
 				};
 			});

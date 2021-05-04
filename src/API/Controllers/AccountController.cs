@@ -95,6 +95,5 @@ namespace API.Controllers
 		{
 			return await _userManager.FindByEmailAsync(email) != null;
 		}
-
 	}
 }
