@@ -1,4 +1,5 @@
 ﻿using API.Dto;
+using API.Errors;
 using API.Extensions;
 using AutoMapper;
 using Core.Entities.Identity;
@@ -34,7 +35,12 @@ namespace API.Controllers
 		public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
 		{
 			if ((await CheckEmailExistAsync(registerDto.Email)).Value)
-				return BadRequest();
+				return new BadRequestObjectResult(
+					new ApiValidationErrorResponse
+					{
+						Errors = new[]
+						{ "Email address in use" }
+					});
 
 			User user = _mapper.Map<RegisterDto, User>(registerDto);
 
@@ -55,11 +61,11 @@ namespace API.Controllers
 		{
 			User user = await _userManager.FindByEmailAsync(loginDto.Email);
 
-			if (user == null) return BadRequest();
+			if (user == null) return BadRequest(new ApiResponse(401));
 
 			SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
-			if (!result.Succeeded) return BadRequest();
+			if (!result.Succeeded) return BadRequest(new ApiResponse(401));
 
 			return new UserDto
 			{
