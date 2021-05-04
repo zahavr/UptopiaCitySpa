@@ -1,0 +1,22 @@
+<div class="form-label-group mb-3">
+  <input
+    bsDatepicker
+    #dateInput
+    type="text"
+    id="{{label}}"
+    placeholder="{{label}}"
+    class="form-control"
+    autocomplete="off"
+    mask="d0/M0/0000"
+    [bsConfig]="{ isAnimated: true }"
+    [maxDate]="maxDate"
+    [ngClass]="controlDir && controlDir.control && controlDir.touched ?
+                  !controlDir.control.valid ? 'is-invalid' : 'is-valid' : null"
+    (bsValueChange)="onChange($event)"
+    (click)="onTouched()"
+  >
+  <div class="invalid-feedback mb-3" *ngIf="ngControlInvalid">
+    <span *ngIf="controlDir.control.errors?.required">{{label}} is required</span>
+  </div>
+
+</div>
