@@ -11,7 +11,7 @@
     <li class="list-group-item">Birth data: <strong>{{userProfile?.birthDate | date: 'longDate'	 }} / Age: {{userProfile?.age}}</strong></li>
   </ul>
   <div class="card-body d-flex justify-content-center btn-group">
-    <button class="btn btn-primary" (click)="openEditDialog()">Update Photo</button>
-    <button class="btn btn-primary">Edit Profile</button>
+    <button class="btn btn-primary" (click)="openUploadDialog()">Update Photo</button>
+    <button class="btn btn-primary" (click)="openEditProfileDialog()">Edit Profile</button>
   </div>
 </div>

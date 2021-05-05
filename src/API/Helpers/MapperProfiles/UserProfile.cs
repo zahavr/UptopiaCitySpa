@@ -13,7 +13,10 @@ namespace API.Helpers.MapperProfiles
 				.ForMember(u => u.UserName, opt => opt.MapFrom(ur => ur.Login));
 			CreateMap<User, UserCabinetDto>()
 				.ForMember(uc => uc.Age, opt => opt.MapFrom<UserAgeResolver>())
-				.ForMember(uc => uc.PictureUrl, opt => opt.MapFrom<AvatarUrlResolver>());
+				.ForMember(uc => uc.PictureUrl, opt => opt.MapFrom<AvatarUrlResolver>())
+				.ReverseMap();
+
+			CreateMap<BaseUserDto, User>();
 		}
     }
 }

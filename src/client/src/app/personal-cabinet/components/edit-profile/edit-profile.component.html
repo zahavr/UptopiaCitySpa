@@ -1,1 +1,18 @@
-<p>edit-profile works!</p>
+<div class="row d-flex flex-column align-items-center">
+  <div class="d-flex justify-content-end w-100 mr-4">
+    <button (click)="closeModal()" class="btn"><i class="fa fa-close"></i></button>
+  </div>
+  <form autocomplete="off" [formGroup]="editForm" (ngSubmit)="onSubmit()" class="w-100 px-5">
+    <div class="form-group">
+      <app-text-input formControlName="firstName" [label]="'First name'"></app-text-input>
+      <app-text-input formControlName="lastName" [label]="'Last name'"></app-text-input>
+      <app-text-input formControlName="email" [label]="'Email Address'"></app-text-input>
+      <app-text-input formControlName="phoneNumber" [label]="'Phone number'" [type]="'phoneNumber'"></app-text-input>
+      <app-date-input formControlName="birthDate" [label]="'Birth date'"></app-date-input>
+    </div>
+    <div class="d-flex justify-content-end mr-3 mb-2 btn-group">
+      <button class="btn btn-success" type="submit">Update</button>
+      <button class="btn btn-danger"  (click)="closeModal()">Close</button>
+    </div>
+  </form>
+</div>

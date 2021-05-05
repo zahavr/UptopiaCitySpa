@@ -1,29 +1,12 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace API.Dto
 {
-	public class RegisterDto
+	public class RegisterDto : BaseUserDto
     {
-		[Required]
-		[EmailAddress]
-		public string Email { get; set; }
-
 		[Required]
 		[MinLength(6)]
 		public string Login { get; set; }
-
-		[Required]
-		public string FirstName { get; set; }
-
-		[Required]
-		public string LastName { get; set; }
-
-		[Required]
-		public string PhoneNumber { get; set; }
-
-		[Required]
-		public DateTime BirthDate { get; set; }
 
 		[Required]
 		[RegularExpression("(?=^.{8,}$)(?=.*\\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$",

@@ -30,4 +30,12 @@ export class UserService{
   getNewPhotoUrl(): Observable<any> {
     return this.photoUrl.asObservable();
   }
+
+  updateUserProfile(value): Observable<IUserProfile> {
+    return this.http.patch(this.baseUrl + ApiUrl.User.UpdateProfileInfo, value).pipe(
+      map((res: IUserProfile) => {
+        return res;
+      })
+    );
+  }
 }

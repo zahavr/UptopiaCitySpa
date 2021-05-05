@@ -15,5 +15,6 @@ export const ApiUrl = {
   User: {
     Info: 'api/user/user-info',
     UploadPhoto: 'api/user/upload-photo',
+    UpdateProfileInfo: 'api/user/update-user'
   }
 };

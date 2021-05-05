@@ -56,5 +56,20 @@ namespace API.Controllers
 
 			return BadRequest(new ApiResponse(401));
 		}
+
+		[Authorize]
+		[HttpPatch("update-user")]
+		public async Task<ActionResult<UserCabinetDto>> UpdateUserProfile(BaseUserDto userDto)
+		{
+			User user = await _userManager.FindByEmailFromClaimsPrincipals(HttpContext.User);
+
+			_mapper.Map<BaseUserDto, User>(userDto, user);
+
+			IdentityResult result = await _userManager.UpdateAsync(user);
+
+			if (!result.Succeeded) return BadRequest(new ApiResponse(400));
+
+			return Ok(_mapper.Map<User, UserCabinetDto>(user));
+		}
 	}
 }
