@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {IUserProfile} from '../interfaces/user-profile.interface';
 import {ApiUrl} from '../constants/shared.url.constants';
 import {map} from 'rxjs/operators';
@@ -8,7 +8,9 @@ import {map} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService{
+  private photoUrl = new Subject<string>();
+
 
   constructor(private http: HttpClient,
               @Inject('BASE_URL') private baseUrl) { }
@@ -19,5 +21,13 @@ export class UserService {
         return userProfile;
       })
     );
+  }
+
+  updateUserPhotoUrl(url: string): void {
+    this.photoUrl.next(url);
+  }
+
+  getNewPhotoUrl(): Observable<any> {
+    return this.photoUrl.asObservable();
   }
 }

@@ -4,6 +4,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {AppRoute} from '../shared/constants/shared.route.constants';
 import {RegisterComponent} from './register/register.component';
+import {FilePickerModule} from 'ngx-awesome-uploader';
 
 const routes: Routes = [
   {path: AppRoute.Account.Login, component: LoginComponent},
@@ -13,7 +14,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [],
   imports: [
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    FilePickerModule
   ],
   exports: [
     RouterModule

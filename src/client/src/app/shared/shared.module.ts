@@ -7,6 +7,7 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {NgxMaskModule} from 'ngx-mask';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {TabsModule} from 'ngx-bootstrap/tabs';
+import {ModalModule} from 'ngx-bootstrap/modal';
 
 
 
@@ -22,6 +23,7 @@ import {TabsModule} from 'ngx-bootstrap/tabs';
     BsDatepickerModule.forRoot(),
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
+    ModalModule.forRoot()
   ],
   exports: [
     TextInputComponent,
@@ -31,7 +33,8 @@ import {TabsModule} from 'ngx-bootstrap/tabs';
     DateInputComponent,
     NgxMaskModule,
     BsDropdownModule,
-    TabsModule
+    TabsModule,
+    ModalModule
   ]
 })
 export class SharedModule { }

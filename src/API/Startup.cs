@@ -1,6 +1,7 @@
 using API.Extensions;
 using API.Helpers.MapperProfiles;
 using API.Middleware;
+using Azure.Storage.Blobs;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,6 +27,10 @@ namespace API
             {
                 configuration.RootPath = "../client/dist";
             });
+
+            services.AddSingleton(bs => 
+                new BlobServiceClient(_configuration.GetConnectionString("AzureBlobStorage")));
+
             services.AddDbContext<AppIdentityDbContext>(db =>
             {
                 db.UseSqlServer(_configuration.GetConnectionString("IdentityConnection"));

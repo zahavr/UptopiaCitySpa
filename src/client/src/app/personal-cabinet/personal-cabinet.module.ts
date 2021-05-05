@@ -7,14 +7,17 @@ import { ProfileInfoComponent } from './components/personal-cabinet/profile-info
 import { ProfileMainComponent } from './components/personal-cabinet/profile-main/profile-main.component';
 import {SharedModule} from '../shared/shared.module';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
+import { PhotoUploaderComponent } from './components/photo-uploader/photo-uploader.component';
+import {FileUploadModule} from 'ng2-file-upload';
 
 
 @NgModule({
-  declarations: [PersonalCabinetComponent, ProfileInfoComponent, ProfileMainComponent, EditProfileComponent],
+  declarations: [PersonalCabinetComponent, ProfileInfoComponent, ProfileMainComponent, EditProfileComponent, PhotoUploaderComponent],
   imports: [
     CommonModule,
     PersonalCabinetRoutingModule,
-    SharedModule
+    SharedModule,
+    FileUploadModule
   ]
 })
 export class PersonalCabinetModule { }

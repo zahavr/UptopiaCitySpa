@@ -12,7 +12,8 @@ namespace API.Helpers.MapperProfiles
 			CreateMap<RegisterDto, User>()
 				.ForMember(u => u.UserName, opt => opt.MapFrom(ur => ur.Login));
 			CreateMap<User, UserCabinetDto>()
-				.ForMember(uc => uc.Age, opt => opt.MapFrom<UserAgeResolver>());
+				.ForMember(uc => uc.Age, opt => opt.MapFrom<UserAgeResolver>())
+				.ForMember(uc => uc.PictureUrl, opt => opt.MapFrom<AvatarUrlResolver>());
 		}
     }
 }

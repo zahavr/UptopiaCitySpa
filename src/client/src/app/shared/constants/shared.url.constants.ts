@@ -13,6 +13,7 @@ export const ApiUrl = {
     ValidationError: 'api/buggy/badrequest/fortytwo'
   },
   User: {
-    Info: 'api/user/user-info'
+    Info: 'api/user/user-info',
+    UploadPhoto: 'api/user/upload-photo',
   }
 };
