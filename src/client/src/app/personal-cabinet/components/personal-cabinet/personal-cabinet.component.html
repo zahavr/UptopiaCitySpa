@@ -1,0 +1,12 @@
+<div class="container">
+  <ng-container *ngIf="(currentUser$ | async) as user">
+    <div class="row d-flex">
+        <div class="col-4">
+          <app-profile-info></app-profile-info>
+        </div>
+        <div class="col-8">
+          <app-profile-main></app-profile-main>
+        </div>
+    </div>
+  </ng-container>
+</div>

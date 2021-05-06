@@ -3,7 +3,7 @@ export const ApiUrl = {
     Register: 'api/account/register',
     Login: 'api/account/login',
     CurrentUser: 'api/account/current-user',
-    EmailExists: 'api/account/emailexists?email=:email'
+    EmailExists: 'api/account/emailexists?email=:email',
   },
   Errors: {
     NotFound: 'api/buggy/notfound',
@@ -11,5 +11,10 @@ export const ApiUrl = {
     ServerError: 'api/buggy/servererror',
     BadRequest: 'api/buggy/badrequest',
     ValidationError: 'api/buggy/badrequest/fortytwo'
+  },
+  User: {
+    Info: 'api/user/user-info',
+    UploadPhoto: 'api/user/upload-photo',
+    UpdateProfileInfo: 'api/user/update-user'
   }
 };

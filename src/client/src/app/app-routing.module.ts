@@ -19,6 +19,10 @@ const routes: Routes = [
     path: 'account',
     loadChildren: () => import('./account/account.module').then(mod => mod.AccountModule)
   },
+  {
+    path: 'personal-cabinet',
+    loadChildren: () => import('./personal-cabinet/personal-cabinet.module').then(mod => mod.PersonalCabinetModule)
+  },
   {path: '**', redirectTo: 'not-found', pathMatch: 'full'}
 ];
 

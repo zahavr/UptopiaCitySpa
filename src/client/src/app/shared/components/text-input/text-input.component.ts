@@ -50,7 +50,6 @@ export class TextInputComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(obj: any): void {
-    console.log(obj);
     this.input.nativeElement.value = obj || '';
   }
 

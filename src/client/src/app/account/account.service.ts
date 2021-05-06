@@ -1,10 +1,12 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {Observable, of, ReplaySubject} from 'rxjs';
+import {Observable, of, ReplaySubject, timer} from 'rxjs';
 import {ApiUrl} from '../shared/constants/shared.url.constants';
 import {IUser} from '../shared/interfaces/user.interface';
-import {map} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
+import {IUserProfile} from '../shared/interfaces/user-profile.interface';
+import {AsyncValidatorFn} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -40,16 +42,8 @@ export class AccountService {
     );
   }
 
-  loadCurrentUser(token: string): Observable<any> {
-    if (token === null) {
-      this.currentUserSource.next(null);
-      return of(null);
-    }
-
-    let headers = new HttpHeaders();
-    headers = headers.set('Authorization', `Bearer ${token}`);
-
-    return  this.http.get(this.baseUrl + ApiUrl.Account.CurrentUser, {headers}).pipe(
+  loadCurrentUser(): Observable<any> {
+    return this.http.get(this.baseUrl + ApiUrl.Account.CurrentUser).pipe(
       map((user: IUser) => {
         if (user) {
           localStorage.setItem('token', user.token);
@@ -61,6 +55,23 @@ export class AccountService {
 
   checkEmailExists(email: string): Observable<any> {
     return this.http.get(this.baseUrl + ApiUrl.Account.EmailExists.replace(':email', email));
+  }
+
+  validateEmailNotTaken(): AsyncValidatorFn {
+    return control => {
+      return timer(500).pipe(
+        switchMap(() => {
+          if (!control.value) {
+            return of(null);
+          }
+          return this.checkEmailExists(control.value).pipe(
+            map(res => {
+              return res ? {emailExists: true} : null;
+            })
+          );
+        })
+      );
+    };
   }
 
   logout(): void {
