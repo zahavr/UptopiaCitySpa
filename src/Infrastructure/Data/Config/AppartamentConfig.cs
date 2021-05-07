@@ -9,12 +9,13 @@ namespace Infrastructure.Data.Config
 	{
 		public void Configure(EntityTypeBuilder<Appartament> builder)
 		{
+			builder.ToTable("Appartaments", "HousingSystem");
 			builder.ToView("Appartaments", "HousingSystem");
 
-			builder.Property(ap => ap.ResidentId).IsRequired();
 			builder.Property(ap => ap.Floor).IsRequired();
 			builder.Property(ap => ap.CountRooms).IsRequired();
-			builder.Property(ap => ap.Building).IsRequired();
+			builder.Property(ap => ap.Description).HasMaxLength(400).IsRequired();
+			builder.Property(ap => ap.Title).HasMaxLength(40).IsRequired();
 
 			builder
 				.Property(ap => ap.Cost)

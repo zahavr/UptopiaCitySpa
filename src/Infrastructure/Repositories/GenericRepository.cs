@@ -3,10 +3,8 @@ using Core.Interfaces;
 using Core.Specification;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
@@ -23,6 +21,16 @@ namespace Infrastructure.Repositories
 		public void Add(T entity)
 		{
 			_context.Set<T>().Add(entity);
+		}
+
+		public void AddRange(ICollection<T> entities)
+		{
+			DbSet<T> dbSet = _context.Set<T>();
+
+			foreach (T entity in entities)
+			{
+				dbSet.Add(entity);
+			}
 		}
 
 		public async Task<int> CountAsync(ISpecification<T> specification)

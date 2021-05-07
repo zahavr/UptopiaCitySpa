@@ -35,20 +35,30 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int>("CountRooms")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
+
                     b.Property<int>("Floor")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ResidentId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
-                    b.Property<int>("TypeAppartament")
-                        .HasColumnType("int");
+                    b.Property<string>("TypeAppartament")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BuildingId");
 
-                    b.ToTable("Appartaments");
+                    b.ToTable("Appartaments", "HousingSystem");
+
+                    b.ToView("Appartaments", "HousingSystem");
                 });
 
             modelBuilder.Entity("Core.Entities.Building", b =>
@@ -65,11 +75,33 @@ namespace Infrastructure.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Street")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Buildings");
+                    b.ToTable("Buildings", "HousingSystem");
+
+                    b.ToView("Buildings", "HousingSystem");
+                });
+
+            modelBuilder.Entity("Core.Entities.UserAppartament", b =>
+                {
+                    b.Property<int>("AppartamentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AppartamentId");
+
+                    b.ToTable("UserAppartament", "HousingSystem");
+
+                    b.ToView("UserAppartament", "HousingSystem");
                 });
 
             modelBuilder.Entity("Core.Entities.Appartament", b =>
@@ -79,6 +111,22 @@ namespace Infrastructure.Data.Migrations
                         .HasForeignKey("BuildingId");
 
                     b.Navigation("Building");
+                });
+
+            modelBuilder.Entity("Core.Entities.UserAppartament", b =>
+                {
+                    b.HasOne("Core.Entities.Appartament", "Appartament")
+                        .WithMany("UserAppartaments")
+                        .HasForeignKey("AppartamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Appartament");
+                });
+
+            modelBuilder.Entity("Core.Entities.Appartament", b =>
+                {
+                    b.Navigation("UserAppartaments");
                 });
 
             modelBuilder.Entity("Core.Entities.Building", b =>

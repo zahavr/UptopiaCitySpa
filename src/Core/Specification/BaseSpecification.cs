@@ -29,6 +29,8 @@ namespace Core.Specification
 
 		public bool IsPagingEnabled { get; private set; }
 
+		public bool IsSkipAndTake { get; private set; }
+
 		protected void AddInclude(Expression<Func<T, object>> includeExpression)
 		{
 			Includes.Add(includeExpression);
@@ -39,9 +41,16 @@ namespace Core.Specification
 			OrderBy = orderExpression;
 		}
 
-		protected void AddOrderByDesc(Expression<Func<T, object>> orderByDescExpression) 
+		protected void AddOrderByDesc(Expression<Func<T, object>> orderByDescExpression)
 		{
 			OrderByDesc = orderByDescExpression;
+		}
+
+		protected void TakeRandom(int take, int skip)
+		{
+			Take = take;
+			Skip = skip;
+			IsSkipAndTake = true;
 		}
 
 		protected void ApplyPaging(int skip, int take)

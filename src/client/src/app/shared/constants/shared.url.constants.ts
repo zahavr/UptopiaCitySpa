@@ -16,5 +16,11 @@ export const ApiUrl = {
     Info: 'api/user/user-info',
     UploadPhoto: 'api/user/upload-photo',
     UpdateProfileInfo: 'api/user/update-user'
+  },
+  Building: {
+    GetAppartaments: 'api/building/get-appartaments',
+    GetAppartament: 'api/building/get-appartament/:id',
+    GetRandomAppartaments: 'api/building/get-random-appartaments',
+    BuyAppartament: 'api/building/buy-appartaments/:id'
   }
 };

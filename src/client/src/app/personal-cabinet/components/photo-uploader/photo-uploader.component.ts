@@ -32,7 +32,7 @@ export class PhotoUploaderComponent implements OnInit {
 
   initializeUploader(): void {
     this.uploader = new FileUploader({
-      url: this.baseUrl + ApiUrl.User.UploadPhoto,
+      url: this.baseUrl + ApiUrl.User.UploadPhoto, // shared component
       authToken: 'Bearer ' + this.currentUser.token,
       isHTML5: true,
       allowedFileType: ['image'],

@@ -29,16 +29,16 @@ namespace Infrastructure.Data
 
 		public IGenericRepository<TEntity> Repository<TEntity>() where TEntity : BaseEntity
 		{
-			if (_repositories != null) _repositories = new Hashtable();
+			if (_repositories == null) _repositories = new Hashtable();
 
 			string type = typeof(TEntity).Name;
 
-			if (!_repositories.Contains(type))
+			if (!_repositories.ContainsKey(type))
 			{
 				Type repositoryType = typeof(GenericRepository<>);
 				object respositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _context);
 
-				_repositories.Add(repositoryType, respositoryInstance);
+				_repositories.Add(type, respositoryInstance);
 			}
 
 			return (IGenericRepository<TEntity>)_repositories[type];

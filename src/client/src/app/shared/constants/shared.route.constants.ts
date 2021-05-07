@@ -5,5 +5,9 @@ export const AppRoute = {
   },
   PersonalCabinet: {
     Main: 'main'
+  },
+  Building: {
+    Main: 'main',
+    Detail: ':id'
   }
 };

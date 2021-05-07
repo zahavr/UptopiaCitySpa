@@ -8,6 +8,7 @@ namespace Infrastructure.Data.Config
 	{
 		public void Configure(EntityTypeBuilder<Building> builder)
 		{
+			builder.ToTable("Buildings", "HousingSystem");
 			builder.ToView("Buildings", "HousingSystem");
 
 			builder.Property(b => b.CountFloor).IsRequired();

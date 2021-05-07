@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace API
 {
@@ -43,6 +42,7 @@ namespace API
             });
 
             services.AddControllers();
+            services.AddPresentation();
             services.AddServices();
             services.AddIdentityServices(_configuration);
             services.AddAutoMapper(typeof(UserProfile));
