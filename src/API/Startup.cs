@@ -2,13 +2,13 @@ using API.Extensions;
 using API.Helpers.MapperProfiles;
 using API.Middleware;
 using Azure.Storage.Blobs;
+using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace API
 {
@@ -31,11 +31,18 @@ namespace API
             services.AddSingleton(bs => 
                 new BlobServiceClient(_configuration.GetConnectionString("AzureBlobStorage")));
 
+            services.AddDbContext<AppDbContext>(db =>
+            {
+                db.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
+            });
+
             services.AddDbContext<AppIdentityDbContext>(db =>
             {
                 db.UseSqlServer(_configuration.GetConnectionString("IdentityConnection"));
             });
+
             services.AddControllers();
+            services.AddPresentation();
             services.AddServices();
             services.AddIdentityServices(_configuration);
             services.AddAutoMapper(typeof(UserProfile));

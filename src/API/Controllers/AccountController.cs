@@ -50,6 +50,7 @@ namespace API.Controllers
 
 			return new UserDto
 			{
+				Money = user.Money,
 				Login = user.UserName,
 				Email = user.Email,
 				Token = _tokenService.CreateToken(user)
@@ -69,6 +70,7 @@ namespace API.Controllers
 
 			return new UserDto
 			{
+				Money = user.Money,
 				Email = user.Email,
 				Login = user.UserName,
 				Token = _tokenService.CreateToken(user)
@@ -84,6 +86,7 @@ namespace API.Controllers
 
 			return new UserDto
 			{
+				Money = user.Money,
 				Email = user.Email,
 				Login = user.UserName,
 				Token = _tokenService.CreateToken(user)

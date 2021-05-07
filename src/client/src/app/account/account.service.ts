@@ -74,6 +74,10 @@ export class AccountService {
     };
   }
 
+  updateUserState(user: IUser): void {
+    this.currentUserSource.next(user);
+  }
+
   logout(): void {
     localStorage.removeItem('token');
     this.router.navigateByUrl('/account/login');

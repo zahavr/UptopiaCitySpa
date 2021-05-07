@@ -1,0 +1,21 @@
+<div class="card mb-3 m-3" style="max-width: 18rem;">
+  <div class="card-header d-flex justify-content-between">
+    <p>
+      {{appartament.title}}
+    </p>
+    <p>Class: {{typeAppartament[appartament.typeAppartament]}}</p>
+  </div>
+  <div class="card-body text-dark">
+    <img style="width: 250px; height: 250px;"
+         src="https://lh6.googleusercontent.com/proxy/u0kqVJJi3bazlEgS_n1-mAyc02cZbG2u-xMdT-LPnLWyyvEt2fPSvVZDqzGoidfyMsml296tvOkmLgWA2BXq4PlIrHPlEyudj659uszD_ALLfP3GDZHgPh-ojUYrKPufZhOCDAirhU--i5xsTGqQmvn1qg=w1200-h630-p-k-no-nu"
+         alt="">
+    <h5 class="card-title">Price: {{appartament.cost | currency}}</h5>
+    <p class="card-text" style="font-size: 0.9em">{{appartament.description}}</p>
+    <div class="btn-group w-100">
+      <button class="btn btn-success" (click)="buyAppartament(appartament.id)"><i class="fa fa-shopping-cart mr-1"></i>Buy</button>
+      <button class="btn btn-secondary" routerLink="/buildings/{{appartament.id}}"
+              replaceUrl="/buildings/{{appartament.id}}"><i class="fa fa-info-circle mr-1"></i> Detail
+      </button>
+    </div>
+  </div>
+</div>

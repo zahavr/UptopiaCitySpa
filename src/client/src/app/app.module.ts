@@ -10,6 +10,7 @@ import {CoreModule} from './core/core.module';
 import {ErrorInterceptor} from './core/interceptors/error.interceptor';
 import {PersonalCabinetModule} from './personal-cabinet/personal-cabinet.module';
 import {JwtInterceptor} from './core/interceptors/jwt.interceptor';
+import {BuildingModule} from './building/building.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {JwtInterceptor} from './core/interceptors/jwt.interceptor';
     HttpClientModule,
     CoreModule,
     HomeModule,
-    PersonalCabinetModule
+    PersonalCabinetModule,
+    BuildingModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
