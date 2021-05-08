@@ -7,6 +7,7 @@ import {IUser} from '../shared/interfaces/user.interface';
 import {map, switchMap} from 'rxjs/operators';
 import {IUserProfile} from '../shared/interfaces/user-profile.interface';
 import {AsyncValidatorFn} from '@angular/forms';
+import {ArrayType} from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,7 @@ export class AccountService {
     return this.http.post(this.baseUrl + ApiUrl.Account.Login, values).pipe(
       map((user: IUser) => {
         if (user) {
-          localStorage.setItem('token', user.token);
-          this.currentUserSource.next(user);
+          this.setCurrentUser(user);
         }
       })
     );
@@ -35,8 +35,7 @@ export class AccountService {
     return this.http.post(this.baseUrl + ApiUrl.Account.Register, values).pipe(
       map((user: IUser) => {
         if (user) {
-          localStorage.setItem('token', user.token);
-          this.currentUserSource.next(user);
+          this.setCurrentUser(user);
         }
       })
     );
@@ -46,8 +45,7 @@ export class AccountService {
     return this.http.get(this.baseUrl + ApiUrl.Account.CurrentUser).pipe(
       map((user: IUser) => {
         if (user) {
-          localStorage.setItem('token', user.token);
-          this.currentUserSource.next(user);
+          this.setCurrentUser(user);
         }
       })
     );
@@ -74,13 +72,28 @@ export class AccountService {
     };
   }
 
+  setCurrentUser(user: IUser): void {
+    user.roles = [];
+    const roles = this.getDecodedToken(user.token).role;
+    Array.isArray(roles) ? user.roles = roles : user.roles.push(roles);
+    localStorage.setItem('token', user.token);
+    localStorage.setItem('roles', JSON.stringify(user.roles));
+    console.log(user);
+    this.currentUserSource.next(user);
+  }
+
   updateUserState(user: IUser): void {
     this.currentUserSource.next(user);
   }
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('roles');
     this.router.navigateByUrl('/account/login');
     this.currentUserSource.next(null);
+  }
+
+  private getDecodedToken(token: string): any {
+    return JSON.parse(atob(token.split('.')[1]));
   }
 }
