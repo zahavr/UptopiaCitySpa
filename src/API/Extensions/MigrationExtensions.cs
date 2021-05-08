@@ -26,8 +26,11 @@ namespace API.Extensions
 					await appContext.Database.MigrateAsync();
 
 					UserManager<User> userManager = services.GetRequiredService<UserManager<User>>();
+					RoleManager<Role> roleManager = services.GetRequiredService<RoleManager<Role>>();
 					AppIdentityDbContext identityContext = services.GetRequiredService<AppIdentityDbContext>();
 					await identityContext.Database.MigrateAsync();
+
+					await SeedUserAndRole.SeedUserAndRoleAsync(userManager, roleManager);
 				}
 				catch (Exception ex)
 				{

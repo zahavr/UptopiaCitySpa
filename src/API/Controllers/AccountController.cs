@@ -53,7 +53,7 @@ namespace API.Controllers
 				Money = user.Money,
 				Login = user.UserName,
 				Email = user.Email,
-				Token = _tokenService.CreateToken(user)
+				Token = await _tokenService.CreateToken(user)
 			};
 		}
 
@@ -73,7 +73,7 @@ namespace API.Controllers
 				Money = user.Money,
 				Email = user.Email,
 				Login = user.UserName,
-				Token = _tokenService.CreateToken(user)
+				Token = await _tokenService.CreateToken(user)
 			};
 		}
 
@@ -89,7 +89,7 @@ namespace API.Controllers
 				Money = user.Money,
 				Email = user.Email,
 				Login = user.UserName,
-				Token = _tokenService.CreateToken(user)
+				Token = await _tokenService.CreateToken(user)
 			};
 		}
 

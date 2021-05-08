@@ -10,6 +10,7 @@ import {TabsModule} from 'ngx-bootstrap/tabs';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import {PaginationModule} from 'ngx-bootstrap/pagination';
+import { HasRoleDirective } from './directives/has-role.directive';
 
 
 
@@ -18,6 +19,7 @@ import {PaginationModule} from 'ngx-bootstrap/pagination';
     TextInputComponent,
     DateInputComponent,
     PaginationComponent,
+    HasRoleDirective,
   ],
   imports: [
     CommonModule,
