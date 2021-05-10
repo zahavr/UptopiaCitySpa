@@ -1,11 +1,12 @@
 <tabset>
-  <tab heading="tab-1">
-    <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">Special title treatment</h5>
-      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
-    </div>
-  </div></tab>
-  <tab heading="tab-2">Tab2</tab>
+    <tab heading="Friends" (selectTab)="selectedTab($event)">
+      <ng-container *ngIf="selectTab == 'Friends'">
+        <app-friends-list [user]="user"></app-friends-list>
+      </ng-container>
+    </tab>
+    <tab heading="Requests" (selectTab)="selectedTab($event)">
+      <ng-container *ngIf="selectTab == 'Requests'">
+        <app-friend-request-list  [user]="user"></app-friend-request-list>
+      </ng-container>
+    </tab>
 </tabset>

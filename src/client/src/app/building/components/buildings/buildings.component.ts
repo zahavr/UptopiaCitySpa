@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ICardBuilding} from '../../../shared/interfaces/building.interface';
-import {BuildingParams} from '../../../shared/interfaces/buildingParams';
+import {BuildingParams} from '../../../shared/params/buildingParams';
 import {BuildingService} from '../../building.service';
 import {IPagination} from '../../../shared/interfaces/pagination.interface';
 
