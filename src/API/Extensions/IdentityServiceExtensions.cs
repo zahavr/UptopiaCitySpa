@@ -14,11 +14,14 @@ namespace API.Extensions
 		public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
 		{
 			IdentityBuilder builder = services.AddIdentityCore<User>();
-
 			builder = new IdentityBuilder(builder.UserType, builder.Services);
+			builder.AddRoles<Role>();
+			builder.AddRoleValidator<RoleValidator<Role>>();
+			builder.AddRoleManager<RoleManager<Role>>();
 			builder.AddEntityFrameworkStores<AppIdentityDbContext>();
 			builder.AddSignInManager<SignInManager<User>>();
 
+			
 			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 			.AddJwtBearer(opt =>
 			{
@@ -27,7 +30,7 @@ namespace API.Extensions
 					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:Key"])),
 					ValidateIssuerSigningKey = true,
 					ValidIssuer = configuration["Token:Issuer"],
-					ValidateIssuer = true,
+					ValidateIssuer = false,
 					ValidateAudience = false
 				};
 			});

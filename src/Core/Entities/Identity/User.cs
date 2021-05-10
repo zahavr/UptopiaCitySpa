@@ -8,5 +8,6 @@ namespace Core.Entities.Identity
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
+        public decimal Money { get; set; }
     }
 }

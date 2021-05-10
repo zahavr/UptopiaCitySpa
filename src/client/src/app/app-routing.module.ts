@@ -19,11 +19,23 @@ const routes: Routes = [
     path: 'account',
     loadChildren: () => import('./account/account.module').then(mod => mod.AccountModule)
   },
+  {
+    path: 'personal-cabinet',
+    loadChildren: () => import('./personal-cabinet/personal-cabinet.module').then(mod => mod.PersonalCabinetModule)
+  },
+  {
+    path: 'buildings',
+    loadChildren: () => import('./building/building.module').then(mod => mod.BuildingModule),
+  },
+  {
+    path: 'friends',
+    loadChildren: () => import('./friends/friends.module').then(mod => mod.FriendsModule),
+  },
   {path: '**', redirectTo: 'not-found', pathMatch: 'full'}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -3,7 +3,7 @@ export const ApiUrl = {
     Register: 'api/account/register',
     Login: 'api/account/login',
     CurrentUser: 'api/account/current-user',
-    EmailExists: 'api/account/emailexists?email=:email'
+    EmailExists: 'api/account/emailexists?email=:email',
   },
   Errors: {
     NotFound: 'api/buggy/notfound',
@@ -11,5 +11,23 @@ export const ApiUrl = {
     ServerError: 'api/buggy/servererror',
     BadRequest: 'api/buggy/badrequest',
     ValidationError: 'api/buggy/badrequest/fortytwo'
-  }
+  },
+  User: {
+    Info: 'api/user/user-info',
+    UploadPhoto: 'api/user/upload-photo',
+    UpdateProfileInfo: 'api/user/update-user',
+    GetFriendList: 'api/user/list-friends',
+    FindFriend: 'api/user/find-friend/:email',
+    AcceptFriendRequest: 'api/user/accept-friend-request/:id',
+    RejectFriendRequest: 'api/user/reject-friend-request/:id',
+    DeleteFriend: 'api/user/delete-friend/:id',
+    CreateFriendRequest: 'api/user/create-friend-request',
+    GetFriendsRequest: 'api/user/list-request-friends'
+  },
+  Building: {
+    GetAppartaments: 'api/building/get-appartaments',
+    GetAppartament: 'api/building/get-appartament/:id',
+    GetRandomAppartaments: 'api/building/get-random-appartaments',
+    BuyAppartament: 'api/building/buy-appartaments/:id'
+  },
 };

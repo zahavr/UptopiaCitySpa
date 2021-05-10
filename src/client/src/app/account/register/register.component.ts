@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
       login: new FormControl('', [Validators.required]),
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email], [this.validateEmailNotTaken()]),
+      email: new FormControl('', [Validators.required, Validators.email], [this.accountService.validateEmailNotTaken()]),
       phoneNumber: new FormControl('', [Validators.required]),
       birthDate: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required, Validators.pattern(this.passwordRegex())])
@@ -42,23 +42,6 @@ export class RegisterComponent implements OnInit {
     }, error => {
       console.log(error);
     });
-  }
-
-  validateEmailNotTaken(): AsyncValidatorFn {
-    return control => {
-      return timer(500).pipe(
-        switchMap(() => {
-          if (!control.value) {
-            return of(null);
-          }
-          return this.accountService.checkEmailExists(control.value).pipe(
-            map(res => {
-              return res ? {emailExists: true} : null;
-            })
-          );
-        })
-      );
-    };
   }
 
   private passwordRegex(): string {

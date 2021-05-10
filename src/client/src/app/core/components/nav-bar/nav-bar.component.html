@@ -10,17 +10,25 @@
     </ng-container>
     <ng-container *ngIf="(currentUser$ | async) as user">
       <nav class="my-2 my-md-0 mr-md-3 text-uppercase" style="font-size: larger">
-        <a class="p-2" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        <a class="p-2" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        <a class="p-2" routerLink="/buildings/main" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Buildings</a>
       </nav>
-      <div class="dropdown ml-3 mr-5" dropdown>
-        <a class="dropdown-toggle" style="cursor: pointer;" dropdownToggle>
-          <strong>Welcome {{user.login}}</strong>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;" *dropdownMenu>
-          <a (click)="logout()"  class="dropdown-item d-flex align-items-center py-2 dropdown-divider">
-            <i class="fa fa-sign-out mr-3"></i> Logout
+      <div class="d-flex">
+        <div class="dropdown ml-3" dropdown>
+          <a class="dropdown-toggle" style="cursor: pointer;" dropdownToggle>
+            <strong>Welcome {{user.login}}</strong>
           </a>
+          <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;" *dropdownMenu>
+            <a routerLink="/personal-cabinet/main"
+               class="dropdown-item d-flex align-items-center py-2 dropdown-divider">
+              <i class="fa fa-user mr-3"></i> Personal Cabinet
+            </a>
+            <a (click)="logout()" class="dropdown-item d-flex align-items-center py-2 dropdown-divider">
+              <i class="fa fa-sign-out mr-3"></i> Logout
+            </a>
+          </div>
         </div>
+        <strong class="ml-2" style="font-size: 0.9em">{{user.money | currency}}</strong>
       </div>
     </ng-container>
   </div>
