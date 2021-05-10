@@ -1,0 +1,12 @@
+<div>
+  <div class="" *ngFor="let friend of friends">
+    <app-friend-item (removeFromRequestList)="removeFromList($event)" [friend]="friend" [itemType]="friendItemType.Request"></app-friend-item>
+  </div>
+</div>
+<div class="d-flex justify-content-center">
+  <app-pagination
+    [pageSize]="friendParams.pageSize"
+    [totalCount]="totalCount"
+    (pageChanged)="onPageChanged($event)">
+  </app-pagination>
+</div>

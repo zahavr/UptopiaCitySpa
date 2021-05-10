@@ -4,7 +4,8 @@ export const AppRoute = {
     Register: 'register'
   },
   PersonalCabinet: {
-    Main: 'main'
+    Main: 'main',
+    Friend: 'list',
   },
   Building: {
     Main: 'main',

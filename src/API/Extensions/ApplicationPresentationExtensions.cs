@@ -8,6 +8,7 @@ namespace API.Extensions
 		public static IServiceCollection AddPresentation(this IServiceCollection services)
 		{
 			services.AddScoped<IBuildingPresentation, BuildingPresntation>();
+			services.AddScoped<IUserPresentation, UserPresentation>();
 
 			return services;
 		}

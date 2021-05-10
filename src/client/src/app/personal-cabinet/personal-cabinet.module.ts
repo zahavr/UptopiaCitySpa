@@ -9,6 +9,7 @@ import {SharedModule} from '../shared/shared.module';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { PhotoUploaderComponent } from './components/photo-uploader/photo-uploader.component';
 import {FileUploadModule} from 'ng2-file-upload';
+import {FriendsModule} from '../friends/friends.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {FileUploadModule} from 'ng2-file-upload';
     CommonModule,
     PersonalCabinetRoutingModule,
     SharedModule,
-    FileUploadModule
+    FileUploadModule,
+    FriendsModule
   ]
 })
 export class PersonalCabinetModule { }

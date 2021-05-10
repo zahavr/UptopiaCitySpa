@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'buildings',
     loadChildren: () => import('./building/building.module').then(mod => mod.BuildingModule),
   },
+  {
+    path: 'friends',
+    loadChildren: () => import('./friends/friends.module').then(mod => mod.FriendsModule),
+  },
   {path: '**', redirectTo: 'not-found', pathMatch: 'full'}
 ];
 

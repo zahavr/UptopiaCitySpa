@@ -1,9 +1,12 @@
 ﻿using API.Dto;
 using API.Errors;
 using API.Extensions;
+using API.Helpers;
+using API.Presentation;
 using AutoMapper;
 using Core.Entities.Identity;
 using Core.Interfaces;
+using Core.Specification.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -19,15 +22,18 @@ namespace API.Controllers
 		private readonly UserManager<User> _userManager;
 		private readonly IMapper _mapper;
 		private readonly IBlobService _blobService;
+		private readonly IUserPresentation _userPresentation;
 
 		public UserController(
 			  UserManager<User> userManager,
 			  IMapper mapper,
-			  IBlobService blobService)
+			  IBlobService blobService,
+			  IUserPresentation userPresentation)
 		{
 			_userManager = userManager;
 			_mapper = mapper;
 			_blobService = blobService;
+			_userPresentation = userPresentation;
 		}
 
 		[Authorize]
@@ -47,10 +53,10 @@ namespace API.Controllers
 			byte[] bytes = await file.GetBytesAsync();
 
 			User user = await _userManager.FindByEmailFromClaimsPrincipals(HttpContext.User);
-				
-			if (await _blobService.UploadPhotoAsync(user.UserName, bytes, file.ContentType))
+
+			if (await _blobService.UploadPhotoAsync(user.Email, bytes, file.ContentType))
 			{
-				Uri fileUri = _blobService.GetPhoto(user.UserName);
+				Uri fileUri = _blobService.GetPhoto(user.Email);
 				return fileUri.AbsoluteUri + $"?t={DateTime.Now}";
 			}
 
@@ -70,6 +76,86 @@ namespace API.Controllers
 			if (!result.Succeeded) return BadRequest(new ApiResponse(400));
 
 			return Ok(_mapper.Map<User, UserCabinetDto>(user));
+		}
+
+		[Authorize]
+		[HttpGet("find-friend/{email}")]
+		public async Task<ActionResult<UserFriendViewDto>> FindFriendByEmail(string email)
+		{
+			User friend = await _userManager.FindByEmailAsync(email);
+
+			if (friend == null)
+			{
+				return BadRequest(new ApiResponse(400, "Sorry, user doesn`t exist"));
+			}
+
+			return _mapper.Map<User, UserFriendViewDto>(friend);
+		}
+
+		[Authorize]
+		[HttpPost("create-friend-request")]
+		public async Task<ActionResult> CreateFriendRequest(UserFriendViewDto friendDto)
+		{
+			User user = await _userManager.FindByEmailFromClaimsPrincipals(HttpContext.User);
+
+			if (friendDto == null)
+			{
+				return BadRequest(new ApiResponse(400, "Cannot send null"));
+			}
+
+			if (await _userPresentation.PrependFriendRequest(user, friendDto))
+			{
+				return Ok();
+			}
+
+			return BadRequest(new ApiResponse(400, "Fail request. Try later."));
+		}
+
+		[Authorize]
+		[HttpGet("accept-friend-request/{id}")]
+		public async Task<ActionResult> AcceptFrientRequest(int id)
+		{
+			if (await _userPresentation.AcceptFriend(id))
+			{
+				return Ok();
+			}
+
+			return BadRequest(new ApiResponse(400, "Cannot add this friend. Try later."));
+		}
+
+		[Authorize]
+		[HttpGet("reject-friend-request/{id}")]
+		public async Task<ActionResult<bool>> RejectFrientRequest(int id)
+		{
+			if (await _userPresentation.RejectFriend(id))
+			{
+				return Ok();
+			}
+
+			return BadRequest(new ApiResponse(400, "Cannot reject this request to friend. Try later."));
+		}
+
+		[Authorize]
+		[HttpGet("list-request-friends")]
+		public async Task<ActionResult<Pagination<UserFriendViewDto>>> ListFriendRequest([FromQuery] UserFriendSpecParams specParams)
+		{
+			return await _userPresentation.GetFriendListRequest(specParams);
+		}
+
+		[Authorize]
+		[HttpGet("list-friends")]
+		public async Task<ActionResult<Pagination<UserFriendViewDto>>> ListFriends([FromQuery] UserFriendSpecParams specParams)
+		{
+			return await _userPresentation.GetFriendList(specParams);
+		}
+
+		[Authorize]
+		[HttpDelete("delete-friend/{id}")]
+		public async Task<ActionResult<bool>> DeleteFriend(int id)
+		{
+			await _userPresentation.DeleteFriendAsync(id);
+
+			return Ok();
 		}
 	}
 }
