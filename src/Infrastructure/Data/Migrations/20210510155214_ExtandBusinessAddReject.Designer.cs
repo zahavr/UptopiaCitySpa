@@ -4,14 +4,16 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210510155214_ExtandBusinessAddReject")]
+    partial class ExtandBusinessAddReject
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,7 +87,7 @@ namespace Infrastructure.Data.Migrations
                     b.ToView("Buildings", "HousingSystem");
                 });
 
-            modelBuilder.Entity("Core.Entities.Business", b =>
+            modelBuilder.Entity("Core.Entities.Business.Business", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -126,7 +128,7 @@ namespace Infrastructure.Data.Migrations
                     b.ToView("Business", "Business");
                 });
 
-            modelBuilder.Entity("Core.Entities.BusinessWorker", b =>
+            modelBuilder.Entity("Core.Entities.Business.BusinessWorker", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -160,7 +162,7 @@ namespace Infrastructure.Data.Migrations
                     b.ToView("BusinessWorkers", "Business");
                 });
 
-            modelBuilder.Entity("Core.Entities.RejectedApplications", b =>
+            modelBuilder.Entity("Core.Entities.Business.RejectedApplications", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -259,38 +261,6 @@ namespace Infrastructure.Data.Migrations
                     b.ToView("UserAppartament", "HousingSystem");
                 });
 
-            modelBuilder.Entity("Core.Entities.Vacancy", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("BusinessesId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<decimal>("Salary")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BusinessesId");
-
-                    b.ToTable("Vacansies", "Business");
-
-                    b.ToView("Vacansies", "Business");
-                });
-
             modelBuilder.Entity("Core.Entities.Appartament", b =>
                 {
                     b.HasOne("Core.Entities.Building", "Building")
@@ -300,9 +270,9 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("Building");
                 });
 
-            modelBuilder.Entity("Core.Entities.BusinessWorker", b =>
+            modelBuilder.Entity("Core.Entities.Business.BusinessWorker", b =>
                 {
-                    b.HasOne("Core.Entities.Business", "Business")
+                    b.HasOne("Core.Entities.Business.Business", "Business")
                         .WithMany("BusinessWorkers")
                         .HasForeignKey("BusinessId");
 
@@ -320,15 +290,6 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("Appartament");
                 });
 
-            modelBuilder.Entity("Core.Entities.Vacancy", b =>
-                {
-                    b.HasOne("Core.Entities.Business", "Businesses")
-                        .WithMany("Vacancies")
-                        .HasForeignKey("BusinessesId");
-
-                    b.Navigation("Businesses");
-                });
-
             modelBuilder.Entity("Core.Entities.Appartament", b =>
                 {
                     b.Navigation("UserAppartaments");
@@ -339,11 +300,9 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("Appartaments");
                 });
 
-            modelBuilder.Entity("Core.Entities.Business", b =>
+            modelBuilder.Entity("Core.Entities.Business.Business", b =>
                 {
                     b.Navigation("BusinessWorkers");
-
-                    b.Navigation("Vacancies");
                 });
 #pragma warning restore 612, 618
         }
