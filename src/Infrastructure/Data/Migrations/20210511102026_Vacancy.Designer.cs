@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210511061058_AddVacancy")]
-    partial class AddVacancy
+    [Migration("20210511102026_Vacancy")]
+    partial class Vacancy
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -268,7 +268,7 @@ namespace Infrastructure.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BusinessesId")
+                    b.Property<int>("BusinessId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -286,11 +286,37 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BusinessesId");
+                    b.HasIndex("BusinessId");
 
-                    b.ToTable("Vacansies", "Business");
+                    b.ToTable("Vacancies", "Business");
 
-                    b.ToView("Vacansies", "Business");
+                    b.ToView("Vacancies", "Business");
+                });
+
+            modelBuilder.Entity("Core.Entities.VacancyApplications", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VacancyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VacancyStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VacancyId");
+
+                    b.ToTable("VacancyApplications", "Business");
+
+                    b.ToView("VacancyApplications", "Business");
                 });
 
             modelBuilder.Entity("Core.Entities.Appartament", b =>
@@ -324,11 +350,24 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Vacancy", b =>
                 {
-                    b.HasOne("Core.Entities.Business", "Businesses")
+                    b.HasOne("Core.Entities.Business", "Business")
                         .WithMany("Vacancies")
-                        .HasForeignKey("BusinessesId");
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("Businesses");
+                    b.Navigation("Business");
+                });
+
+            modelBuilder.Entity("Core.Entities.VacancyApplications", b =>
+                {
+                    b.HasOne("Core.Entities.Vacancy", "Vacancy")
+                        .WithMany("VacancyApplications")
+                        .HasForeignKey("VacancyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Vacancy");
                 });
 
             modelBuilder.Entity("Core.Entities.Appartament", b =>
@@ -346,6 +385,11 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("BusinessWorkers");
 
                     b.Navigation("Vacancies");
+                });
+
+            modelBuilder.Entity("Core.Entities.Vacancy", b =>
+                {
+                    b.Navigation("VacancyApplications");
                 });
 #pragma warning restore 612, 618
         }

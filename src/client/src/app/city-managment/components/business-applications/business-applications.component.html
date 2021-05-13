@@ -1,0 +1,49 @@
+<div class="d-flex justify-content-center mb-2">
+  <h1>Business Applications</h1>
+</div>
+
+<p-table
+  [value]="businessApplications"
+  [lazy]="true"
+  [paginator]="true"
+  [rows]="8"
+  [totalRecords]="totalCount"
+  [loading]="loading"
+  (onLazyLoad)="uploadBusinessApplications($event)"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Address</th>
+      <th>Count of workers</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-businessApplication>
+    <tr>
+      <td>{{businessApplication.name}}</td>
+      <td>{{businessApplication.description}}</td>
+      <td>{{businessApplication.address}}</td>
+      <td>{{businessApplication.maxCountOfWorker}}</td>
+      <td>
+        <div class="btn-group">
+          <div class="btn btn-success" (click)="acceptBusiness(businessApplication.id)">Accept</div>
+          <div class="btn btn-danger" (click)="openDiscardForm(confirmDialog, businessApplication.id)">Reject</div>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<ng-template #confirmDialog>
+  <h4 class="text-center text-uppercase">Reject business form</h4>
+  <form class="form-group p-2" [formGroup]="discardForm" (ngSubmit)="rejectBusiness()">
+    <app-text-input [label]="'Description'" [type]="'text'" formControlName="description"></app-text-input>
+    <app-date-input [label]="'Expired Date'" [minDate]="minDate" formControlName="expiredDate"></app-date-input>
+    <div class="btn-group">
+      <button class="btn btn-outline-success" type="submit" [disabled]="discardForm.invalid">Send</button>
+    </div>
+  </form>
+</ng-template>
+

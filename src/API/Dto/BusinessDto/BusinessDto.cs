@@ -4,6 +4,7 @@ namespace API.Dto.BusinessDto
 {
 	public class BusinessDto
     {
+		public int Id { get; set; }
 		[Required]
 		public string Name { get; set; }
 		[Required]

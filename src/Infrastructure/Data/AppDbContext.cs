@@ -26,6 +26,7 @@ namespace Infrastructure.Data
 			modelBuilder.ApplyConfiguration(new BusinessConfig());
 			modelBuilder.ApplyConfiguration(new RejectedApplicationsConfig());
 			modelBuilder.ApplyConfiguration(new VacancyConfig());
+			modelBuilder.ApplyConfiguration(new VacancyApplicationsConfig());
 		}
 	}
 }

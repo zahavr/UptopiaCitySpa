@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {ApiUrl} from '../shared/constants/shared.url.constants';
-import {BuildingParams} from '../shared/params/buildingParams';
+import {DefaultParams} from '../shared/params/defaultParams';
 import {IPagination} from '../shared/interfaces/pagination.interface';
 import {map} from 'rxjs/operators';
 import {ICardBuilding} from '../shared/interfaces/building.interface';
@@ -15,7 +15,7 @@ export class BuildingService {
   constructor(private http: HttpClient,
               @Inject('BASE_URL') private baseUrl) { }
 
-  getAppartaments(buildingParams: BuildingParams): Observable<IPagination> {
+  getAppartaments(buildingParams: DefaultParams): Observable<IPagination> {
     let params: HttpParams = new HttpParams();
 
     params = params.append('pageIndex', buildingParams.pageIndex.toString());

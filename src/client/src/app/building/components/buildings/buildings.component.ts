@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ICardBuilding} from '../../../shared/interfaces/building.interface';
-import {BuildingParams} from '../../../shared/params/buildingParams';
+import {DefaultParams} from '../../../shared/params/defaultParams';
 import {BuildingService} from '../../building.service';
 import {IPagination} from '../../../shared/interfaces/pagination.interface';
 
@@ -11,7 +11,7 @@ import {IPagination} from '../../../shared/interfaces/pagination.interface';
 })
 export class BuildingsComponent implements OnInit {
   buildings: ICardBuilding[];
-  buildingParams = new BuildingParams();
+  buildingParams = new DefaultParams();
   totalCount: number;
 
   constructor(private buildingService: BuildingService) {

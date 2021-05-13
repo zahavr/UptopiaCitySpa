@@ -11,5 +11,6 @@ namespace Core.Interfaces
 		Task<bool> AcceptBusinessRequest(Business business);
 		Task<bool> RejectBusinessRequest(Business business, RejectedApplications rejectedApplication);
 		Task<bool> CreateVacansyForBusiness(Vacancy vacancy);
+		Task<bool> RespondVacancy(VacancyApplications vacancyApplications);
 	}
 }

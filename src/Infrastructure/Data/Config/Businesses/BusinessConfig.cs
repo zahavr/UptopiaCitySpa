@@ -23,7 +23,8 @@ namespace Infrastructure.Data.Config
 
 			builder
 				.HasMany(b => b.Vacancies)
-				.WithOne(v => v.Businesses);
+				.WithOne(v => v.Business)
+				.OnDelete(DeleteBehavior.Restrict);
 		}
 	}
 }

@@ -9,10 +9,11 @@ import {ControlValueAccessor, NgControl} from '@angular/forms';
 export class DateInputComponent implements OnInit, ControlValueAccessor {
   @ViewChild('dateInput', {static: true}) input: ElementRef;
   @Input() label;
-  maxDate: Date;
+  @Input() maxDate: Date;
+  @Input() minDate: Date;
+
   constructor(@Self() public controlDir: NgControl) {
-    this.maxDate = new Date();
-    this.maxDate.setDate(this.maxDate.getDate());
+    this.setMaxAndMinDate();
     this.controlDir.valueAccessor = this;
   }
 
@@ -45,4 +46,12 @@ export class DateInputComponent implements OnInit, ControlValueAccessor {
     this.input.nativeElement.value = obj || '';
   }
 
+  setMaxAndMinDate(): void {
+    if (this.maxDate) {
+      this.maxDate.setDate(this.maxDate.getDate());
+    }
+    if (this.minDate) {
+      this.minDate.setDate(this.minDate.getDate());
+    }
+  }
 }

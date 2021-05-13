@@ -8,8 +8,8 @@ namespace Infrastructure.Data.Config
 	{
 		public void Configure(EntityTypeBuilder<Vacancy> builder)
 		{
-			builder.ToTable("Vacansies", "Business");
-			builder.ToView("Vacansies", "Business");
+			builder.ToTable("Vacancies", "Business");
+			builder.ToView("Vacancies", "Business");
 
 			builder.Property(b => b.Title).IsRequired().HasMaxLength(50);
 			builder.Property(b => b.Description).IsRequired().HasMaxLength(1000);
@@ -17,8 +17,12 @@ namespace Infrastructure.Data.Config
 
 
 			builder
-				.HasOne(b => b.Businesses)
+				.HasOne(b => b.Business)
 				.WithMany(b => b.Vacancies);
+
+			builder
+				.HasMany(b => b.VacancyApplications)
+				.WithOne(b => b.Vacancy);
 		}
 	}
 }

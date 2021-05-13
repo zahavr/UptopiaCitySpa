@@ -55,5 +55,12 @@ namespace Infrastructure.Services
 
 			return _unitOfWork.Complete();
 		}
+
+		public Task<bool> RespondVacancy(VacancyApplications vacancyApplications)
+		{
+			_unitOfWork.Repository<VacancyApplications>().Add(vacancyApplications);
+
+			return _unitOfWork.Complete();
+		}
 	}
 }

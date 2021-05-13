@@ -12,9 +12,11 @@ namespace API.Helpers.MapperProfiles
 			CreateMap<BusinessDto, Business>()
 				.ForMember(x => x.OwnerId, opt => opt.MapFrom<BusinessOwnerResolver>())
 				.ForMember(x => x.BusinessStatus, opt => opt.MapFrom(x => BusinessStatus.Pending));
+			CreateMap<Business, BusinessDto>();
 
 			CreateMap<RejectApplicationDto, RejectedApplications>();
 			CreateMap<BusinessVacancyDto, Vacancy>();
+			CreateMap<RespondVacancyDto, VacancyApplications>();
 		}
     }
 }

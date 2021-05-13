@@ -30,6 +30,7 @@ namespace Core.Specification
 		public bool IsPagingEnabled { get; private set; }
 
 		public bool IsSkipAndTake { get; private set; }
+		public bool IsTableData { get; private set; }
 
 		protected void AddInclude(Expression<Func<T, object>> includeExpression)
 		{
@@ -51,6 +52,13 @@ namespace Core.Specification
 			Take = take;
 			Skip = skip;
 			IsSkipAndTake = true;
+		}
+
+		public void ApplyTable(int skip, int take)
+		{
+			Take = take;
+			Skip = skip;
+			IsTableData = true;
 		}
 
 		protected void ApplyPaging(int skip, int take)

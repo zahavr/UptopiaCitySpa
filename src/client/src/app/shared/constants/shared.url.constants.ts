@@ -30,4 +30,11 @@ export const ApiUrl = {
     GetRandomAppartaments: 'api/building/get-random-appartaments',
     BuyAppartament: 'api/building/buy-appartaments/:id'
   },
+  Business: {
+    GetBusinessApplications: 'api/business/get-business-requests',
+    AcceptBusiness: 'api/business/accept-business-request/:businessId',
+    RejectBusiness: 'api/business/reject-business-application',
+    GetUserBusiness: 'api/business/get-my-business',
+    GetUserApplications: 'api/business/user-business-applications'
+  }
 };
