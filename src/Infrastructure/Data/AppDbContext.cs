@@ -22,6 +22,11 @@ namespace Infrastructure.Data
 			modelBuilder.ApplyConfiguration(new BuildingConfig());
 			modelBuilder.ApplyConfiguration(new UserAppartamentConfig());
 			modelBuilder.ApplyConfiguration(new FriendConfig());
+			modelBuilder.ApplyConfiguration(new BusinessWorkerConfig());
+			modelBuilder.ApplyConfiguration(new BusinessConfig());
+			modelBuilder.ApplyConfiguration(new RejectedApplicationsConfig());
+			modelBuilder.ApplyConfiguration(new VacancyConfig());
+			modelBuilder.ApplyConfiguration(new VacancyApplicationsConfig());
 		}
 	}
 }

@@ -9,9 +9,23 @@
       </div>
     </ng-container>
     <ng-container *ngIf="(currentUser$ | async) as user">
-      <nav class="my-2 my-md-0 mr-md-3 text-uppercase" style="font-size: larger">
+      <nav class="my-2 my-md-0 mr-md-3 text-uppercase d-flex" style="font-size: 0.9em" >
         <a class="p-2" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        <div class="dropdown p-2" dropdown>
+          <a class="dropdown-toggle" style="cursor: pointer;" dropdownToggle>City managment</a>
+          <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;" *dropdownMenu>
+            <a class="p-2 text-nowrap dropdown-item" routerLink="/city-managment/business-applications" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Business Applications</a>
+            <a class="p-2 text-nowrap dropdown-item" routerLink="/business/vacancy-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Vacancies</a>
+          </div>
+        </div>
         <a class="p-2" routerLink="/buildings/main" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Buildings</a>
+        <div *appHasRole="['BusinessOwner']" class="dropdown p-2" dropdown>
+          <a class="dropdown-toggle" style="cursor: pointer;" dropdownToggle>Business</a>
+          <div  class="dropdown-menu dropdown-menu-right" style="cursor: pointer" *dropdownMenu>
+            <a class="dropdown-item p-2" routerLink="/business/main" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">My Business</a>
+            <a class="dropdown-item p-2" routerLink="/business/requests-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">My applications</a>
+          </div>
+        </div>
       </nav>
       <div class="d-flex">
         <div class="dropdown ml-3" dropdown>

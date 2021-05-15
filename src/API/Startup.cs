@@ -41,11 +41,12 @@ namespace API
                 db.UseSqlServer(_configuration.GetConnectionString("IdentityConnection"));
             });
 
+            services.AddHttpContextAccessor();
             services.AddControllers();
             services.AddPresentation();
             services.AddServices();
             services.AddIdentityServices(_configuration);
-            services.AddAutoMapper(typeof(UserProfile));
+            services.AddAutoMapper(typeof(UserProfile), typeof(BuildingProfile), typeof(BusinessProfile));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

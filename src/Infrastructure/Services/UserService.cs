@@ -32,14 +32,14 @@ namespace Infrastructure.Services
 			_unitOfWork.Repository<Friend>().Update(friendRequest);
 			_unitOfWork.Repository<Friend>().Add(friendForFriend);
 
-			return await _unitOfWork.Complete() >= 1;
+			return await _unitOfWork.Complete();
 		}
 
 		public async Task<bool> CreateFriendRequest(Friend userFriend)
 		{
 			_unitOfWork.Repository<Friend>().Add(userFriend);
 
-			return await _unitOfWork.Complete() >= 1;
+			return await _unitOfWork.Complete();
 		}
 
 		public async Task<bool> DeleteFriendAsync(Friend friend)
@@ -53,7 +53,7 @@ namespace Infrastructure.Services
 			repository.Delete(deleteFriend);
 			repository.Delete(friend);
 
-			return await _unitOfWork.Complete() >= 1;
+			return await _unitOfWork.Complete();
 		}
 
 		public async Task<bool> RecalculateMoney(User user, decimal money)
@@ -71,7 +71,7 @@ namespace Infrastructure.Services
 
 			_unitOfWork.Repository<Friend>().Delete(friendRequest);
 
-			return await _unitOfWork.Complete() >= 1;
+			return await _unitOfWork.Complete();
 		}
 
 

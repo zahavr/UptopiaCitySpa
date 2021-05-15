@@ -27,7 +27,7 @@ namespace Infrastructure.Services
 			_unitOfWork.Repository<Appartament>()
 				.AddRange(building.Appartaments);
 
-			return await _unitOfWork.Complete() >= 1;
+			return await _unitOfWork.Complete();
 		}
 
 		public async Task<bool> BuyAppartamentsAsync(User user, int appartamentId)
@@ -56,7 +56,7 @@ namespace Infrastructure.Services
 			_unitOfWork.Repository<UserAppartament>()
 				.Add(ownerAppartament);
 
-			return await _unitOfWork.Complete() >= 1;
+			return await _unitOfWork.Complete();
 		}
 	}
 }

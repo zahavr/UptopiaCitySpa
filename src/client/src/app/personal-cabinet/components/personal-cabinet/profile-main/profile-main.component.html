@@ -9,4 +9,9 @@
         <app-friend-request-list  [user]="user"></app-friend-request-list>
       </ng-container>
     </tab>
+  <tab heading="Vacancy" (selectTab)="selectedTab($event)">
+    <ng-container *ngIf="selectTab == 'Vacancy'">
+      <app-vacancies-responds></app-vacancies-responds>
+    </ng-container>
+  </tab>
 </tabset>

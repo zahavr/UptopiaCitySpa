@@ -32,6 +32,11 @@ namespace Infrastructure.Data
 				query = query.Skip(specification.Skip).Take(specification.Take);
 			}
 
+			if (specification.IsTableData)
+			{
+				query = query.Skip(specification.Skip).Take(specification.Take);
+			}
+
 			if (specification.IsSkipAndTake)
 			{
 				query = query.Skip(specification.Skip).Take(specification.Take);

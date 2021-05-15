@@ -1,0 +1,8 @@
+<form class="form-group p-3" [formGroup]="vacancyForm">
+  <app-text-input formControlName="title" [label]="'Name vacancy'" [type]="'text'"></app-text-input>
+  <app-text-input formControlName="description" [label]="'Description vacancy'" [type]="'text'"></app-text-input>
+  <app-text-input formControlName="salary" [label]="'Salary'" [type]="'number'"></app-text-input>
+  <div class="d-flex w-100 justify-content-end">
+    <button class="btn btn-success w-25" (click)="createVacancy()">Create</button>
+  </div>
+</form>

@@ -1,0 +1,28 @@
+<p-table
+  [value]="vacanciesResponds"
+  [lazy]="true"
+  [paginator]="true"
+  [rows]="8"
+  [totalRecords]="totalCount"
+  [loading]="loading"
+  (onLazyLoad)="onChanePage($event)"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Name Vacancy</th>
+      <th>Description</th>
+      <th>Salary</th>
+      <th>Status</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-vacancyRespond>
+    <tr>
+      <td>{{vacancyRespond.title}}</td>
+      <td>{{vacancyRespond.description}}</td>
+      <td>{{vacancyRespond.salary | currency}}</td>
+      <td>
+        <p>Pending...</p>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

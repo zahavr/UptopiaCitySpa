@@ -10,6 +10,7 @@ import { EditProfileComponent } from './components/edit-profile/edit-profile.com
 import { PhotoUploaderComponent } from './components/photo-uploader/photo-uploader.component';
 import {FileUploadModule} from 'ng2-file-upload';
 import {FriendsModule} from '../friends/friends.module';
+import {BusinessModule} from '../business/business.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {FriendsModule} from '../friends/friends.module';
     PersonalCabinetRoutingModule,
     SharedModule,
     FileUploadModule,
-    FriendsModule
+    FriendsModule,
+    BusinessModule
   ]
 })
 export class PersonalCabinetModule { }
