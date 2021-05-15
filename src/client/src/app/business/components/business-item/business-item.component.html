@@ -6,12 +6,9 @@
     <h5 class="card-title">Description: {{business.description}}</h5>
     <p class="card-text">Address: {{business.address}}</p>
     <div class="btn-group">
-      <button class="btn btn-primary">List of worker</button>
-      <button class="btn btn-primary">Create vacancy</button>
+      <button class="btn btn-primary" (click)="showListWorkers()">List of worker</button>
+      <button class="btn btn-primary" (click)="createVacancy()">Create vacancy</button>
+      <button class="btn btn-primary" (click)="showListVacancyResponse()">Response List </button>
     </div>
   </div>
 </div>
-
-<ng-template >
-
-</ng-template>

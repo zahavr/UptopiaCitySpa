@@ -10,7 +10,9 @@ namespace Core.Interfaces
 		bool IsHasMoneyForOpenBusiness(User user, int maxCountOfWorker);
 		Task<bool> AcceptBusinessRequest(Business business);
 		Task<bool> RejectBusinessRequest(Business business, RejectedApplications rejectedApplication);
-		Task<bool> CreateVacansyForBusiness(Vacancy vacancy);
+		Task<bool> CreateVacancyForBusiness(Vacancy vacancy);
 		Task<bool> RespondVacancy(VacancyApplications vacancyApplications);
+		Task<bool> AcceptWorker(VacancyApplications vacancy);
+		Task<bool> DismissWorker(BusinessWorker businessWorker);
 	}
 }

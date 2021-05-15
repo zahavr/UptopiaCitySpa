@@ -5,3 +5,11 @@ export interface IBusiness {
   address: string;
   maxCountOfWorker: number;
 }
+
+export interface IBusinessWorker {
+  id: number;
+  firstName: string;
+  lastName: string;
+  salary: number;
+  positionAtWork: number;
+}

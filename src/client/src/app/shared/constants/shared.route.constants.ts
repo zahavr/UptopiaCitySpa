@@ -16,6 +16,7 @@ export const AppRoute = {
   },
   Business: {
     Main: 'main',
-    RequestList: 'requests-list'
+    RequestList: 'requests-list',
+    VacancyList: 'vacancy-list'
   }
 };

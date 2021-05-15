@@ -7,6 +7,8 @@ using Core.Entities.Identity;
 using Core.Interfaces;
 using Core.Specification;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -18,18 +20,27 @@ namespace API.Presentation
 		private readonly IMapper _mapper;
 		private readonly IBusinessService _businessService;
 		private readonly IGenericRepository<Business> _businessRepository;
+		private readonly IGenericRepository<Vacancy> _vacancyRepository;
+		private readonly IGenericRepository<VacancyApplications> _vacanciesApplications;
+		private readonly IGenericRepository<BusinessWorker> _businessWorkerRepository;
 		private readonly UserManager<User> _userManager;
 
 		public BusinessPresentation(
 			IMapper mapper,
 			IBusinessService businessService,
 			IGenericRepository<Business> businessRepository,
+			IGenericRepository<Vacancy> vacancyRepository,
+			IGenericRepository<VacancyApplications> vacanciesApplications,
+			IGenericRepository<BusinessWorker> businessWorkerRepository,
 			UserManager<User> userManager)
 		{
 			_mapper = mapper;
 			_businessService = businessService;
 			_businessRepository = businessRepository;
+			_vacancyRepository = vacancyRepository;
+			_vacanciesApplications = vacanciesApplications;
 			_userManager = userManager;
+			_businessWorkerRepository = businessWorkerRepository;
 		}
 
 		public async Task<bool> AcceptBusinessRequest(int businessId)
@@ -42,7 +53,7 @@ namespace API.Presentation
 
 			if (await _userManager.IsInRoleAsync(user, "BusinessOwner"))
 				return true;
-		
+
 			IdentityResult addRoleResut = await _userManager.AddToRoleAsync(user, "BusinessOwner");
 
 			return addRoleResut.Succeeded;
@@ -61,11 +72,89 @@ namespace API.Presentation
 			return false;
 		}
 
-		public async Task<bool> CreateVacansy(BusinessVacancyDto businessVacancyDto)
+		public async Task<bool> CreateVacancy(BusinessVacancyDto businessVacancyDto)
 		{
 			Vacancy vacancy = _mapper.Map<BusinessVacancyDto, Vacancy>(businessVacancyDto);
 
-			return await _businessService.CreateVacansyForBusiness(vacancy);
+			return await _businessService.CreateVacancyForBusiness(vacancy);
+		}
+
+		public async Task<TableData<WorkerDto>> GetBusinessWorkers(TableParams tableParams, int businessId)
+		{
+			CountBusinessWorkersForBusinessSpecification countData = new CountBusinessWorkersForBusinessSpecification(businessId);
+			ListBusinessWorkersForBusinessSpecification dataSpec = new ListBusinessWorkersForBusinessSpecification(tableParams, businessId);
+
+			int count = await _businessWorkerRepository.CountAsync(countData);
+
+			IReadOnlyList<BusinessWorker> businessWorkers = await _businessWorkerRepository.ListAsync(dataSpec);
+			List<WorkerDto> data = await SetBusinessWorkersToWorkersDto(businessWorkers);
+
+			return new TableData<WorkerDto> { Data = data, Count = count };
+		}
+
+		private async Task<List<WorkerDto>> SetBusinessWorkersToWorkersDto(IReadOnlyList<BusinessWorker> businessWorkers)
+		{
+			List<WorkerDto> workers = new List<WorkerDto>();
+
+			foreach (BusinessWorker worker in businessWorkers)
+			{
+				WorkerDto businessWorker = _mapper.Map<BusinessWorker, WorkerDto>(worker);
+
+				User user = await _userManager.FindByIdAsync(worker.WorkerId);
+
+				businessWorker.FirstName = user.FirstName;
+				businessWorker.LastName = user.LastName;
+
+				workers.Add(businessWorker);
+			}
+
+			return workers;
+		}
+
+		public async Task<TableData<VacancyRespondDto>> GetAllBusinessVacanciesRespond(TableParams tableParams, int businessId)
+		{
+			CountBusinessVacancyRespondSpecification countData = new CountBusinessVacancyRespondSpecification(businessId);
+			BusinessVacancyRespondSpecification dataSpec = new BusinessVacancyRespondSpecification(tableParams, businessId);
+
+			int count = await _vacanciesApplications.CountAsync(countData);
+
+			IReadOnlyList<VacancyApplications> vacancyApplications = await _vacanciesApplications.ListAsync(dataSpec);
+			List<VacancyRespondDto> vacancyResponds = await SetUserToVacancy(vacancyApplications);
+
+			return new TableData<VacancyRespondDto> { Data = vacancyResponds, Count = count };
+		}
+
+		private async Task<List<VacancyRespondDto>> SetUserToVacancy(IReadOnlyList<VacancyApplications> vacancyApplications)
+		{
+			List<VacancyRespondDto> vacancyResponds = new List<VacancyRespondDto>();
+
+			foreach (VacancyApplications vacancyApplication in vacancyApplications)
+			{
+				VacancyRespondDto vacancyRespond = _mapper.Map<VacancyApplications, VacancyRespondDto>(vacancyApplication);
+
+				User user = await _userManager.FindByIdAsync(vacancyApplication.ApplicantId);
+
+				vacancyRespond.FirstName = user.FirstName;
+				vacancyRespond.LastName = user.LastName;
+
+				vacancyResponds.Add(vacancyRespond);
+			}
+
+			return vacancyResponds;
+		}
+
+		public async Task<Pagination<FullVacancyDto>> GetAllVacancies(BaseSpecParams specParams, ClaimsPrincipal user)
+		{
+			CountAllVacanciesSpecification countData = new CountAllVacanciesSpecification();
+			ListAllVacanciesSpecification dataSpec = new ListAllVacanciesSpecification(specParams);
+
+			int count = await _vacancyRepository.CountAsync(countData);
+
+			IReadOnlyList<Vacancy> data = await _vacancyRepository.ListAsync(dataSpec);
+			IReadOnlyList<FullVacancyDto> result = _mapper.Map<IReadOnlyList<Vacancy>, IReadOnlyList<FullVacancyDto>>(data);
+
+
+			return new Pagination<FullVacancyDto>(specParams.PageIndex, specParams.PageSize, count, result);
 		}
 
 		public async Task<TableData<BusinessDto>> GetBusinessRequests(TableParams tableParams)
@@ -76,7 +165,7 @@ namespace API.Presentation
 			int count = await _businessRepository.CountAsync(countData);
 
 			IReadOnlyList<Business> data = await _businessRepository.ListAsync(dataSpec);
-			IReadOnlyList<BusinessDto> result = _mapper.Map<IReadOnlyList<Business>, IReadOnlyList<BusinessDto>> (data);
+			IReadOnlyList<BusinessDto> result = _mapper.Map<IReadOnlyList<Business>, IReadOnlyList<BusinessDto>>(data);
 
 			return new TableData<BusinessDto> { Data = result, Count = count };
 		}
@@ -121,16 +210,49 @@ namespace API.Presentation
 			return await _businessService.RejectBusinessRequest(business, rejectApllications);
 		}
 
-		public async Task<bool> RespondVacancy(RespondVacancyDto respondVacancyDto, ClaimsPrincipal claims)
+		public async Task<bool> RespondVacancy(int vacancyId, ClaimsPrincipal claims)
 		{
 			User user = await _userManager.FindByEmailFromClaimsPrincipals(claims);
 
-			respondVacancyDto.ApplicantId = user.Id;
-			respondVacancyDto.VacancyStatus = VacancyStatus.Pending;
-
-			VacancyApplications vacancyApplications = _mapper.Map<RespondVacancyDto, VacancyApplications>(respondVacancyDto);
+			VacancyApplications vacancyApplications = new VacancyApplications
+			{
+				VacancyId = vacancyId,
+				VacancyStatus = VacancyStatus.Pending,
+				ApplicantId = user.Id
+			};
 
 			return await _businessService.RespondVacancy(vacancyApplications);
+		}
+
+		public async Task<TableData<UserRespondVacancyDto>> GetUserRespondVacancies(TableParams tableParams, ClaimsPrincipal claims)
+		{
+			User user = await _userManager.FindByEmailFromClaimsPrincipals(claims);
+
+			CountUserRespondApplicationsSpecification countData = new CountUserRespondApplicationsSpecification(user.Id);
+			ListUserRespondVacanciesSpecification dataSpec = new ListUserRespondVacanciesSpecification(tableParams, user.Id);
+
+			int totalCount = await _vacanciesApplications.CountAsync(countData);
+
+			IReadOnlyList<VacancyApplications> data = await _vacanciesApplications.ListAsync(dataSpec);
+			IReadOnlyList<UserRespondVacancyDto> result = _mapper.Map<IReadOnlyList<VacancyApplications>, IReadOnlyList<UserRespondVacancyDto>>(data);
+
+			return new TableData<UserRespondVacancyDto> { Data = result, Count = totalCount };
+		}
+
+		public async Task<bool> AcceptWorker(int vacancyApplicationId)
+		{
+			VacancyApplications vacancy = await _vacanciesApplications.GetAll()
+																	  .Include(va => va.Vacancy)
+																	  .FirstOrDefaultAsync(va => va.Id == vacancyApplicationId);
+
+			return await _businessService.AcceptWorker(vacancy);
+		}
+
+		public async Task<ActionResult<bool>> DismissWoker(int id)
+		{
+			BusinessWorker businessWorker = await _businessWorkerRepository.GetByIdAsync(id);
+
+			return await _businessService.DismissWorker(businessWorker);
 		}
 	}
 }
