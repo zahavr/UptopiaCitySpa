@@ -1,4 +1,8 @@
-<div class="row">
+<div class="d-flex justify-content-center">
+  <button class="btn btn-success w-100" (click)="createNewBusiness()">Create request for new business</button>
+</div>
+
+<div class="row mt-2">
   <div class="col-6 p-2" *ngFor="let business of businesses">
     <app-business-item [business]="business"></app-business-item>
   </div>

@@ -6,7 +6,7 @@ namespace Core.Entities
     {
 		public string Street { get; set; }
 		public int CountFloor { get; set; }
-		public int CountApartments { get; set; }
+		public int CountAppartments { get; set; }
 		
 		public virtual ICollection<Appartament> Appartaments { get; set; }
 	}

@@ -1,4 +1,5 @@
 ﻿using API.Dto.BusinessDto;
+using API.Errors;
 using API.Helpers;
 using API.Presentation;
 using Core.Specification;
@@ -18,7 +19,7 @@ namespace API.Controllers
 			_businessPresentation = businessPresentation;
 		}
 
-		[Authorize]
+		[Authorize(Roles = "CityManager")]
 		[HttpGet("get-business-requests")]
 		public async Task<TableData<BusinessDto>> GetBusinessRequests([FromQuery] TableParams tableParams)
 		{
@@ -32,6 +33,7 @@ namespace API.Controllers
 			return await _businessPresentation.GetUserBusiness(specParams, HttpContext.User);
 		}
 
+		[Authorize]
 		[HttpGet("user-business-applications")]
 		public async Task<TableData<BusinessDto>> GetPendingBusiness([FromQuery] TableParams tableParams)
 		{
@@ -40,19 +42,19 @@ namespace API.Controllers
 
 		[Authorize]
 		[HttpPost("create-business-request")]
-		public async Task<ActionResult<bool>> CreateBusinessRequest(BusinessDto businessDto)
+		public async Task<ActionResult<ApiResponse>> CreateBusinessRequest(BusinessDto businessDto)
 		{
 			return await _businessPresentation.CreateBusinessRequest(businessDto);
 		}
 
-		[Authorize]
+		[Authorize(Roles = "CityManager")]
 		[HttpPatch("accept-business-request/{businessId}")]
-		public async Task<ActionResult<bool>> AcceptBusinessRequest(int businessId)
+		public async Task<ActionResult<ApiResponse>> AcceptBusinessRequest(int businessId)
 		{
 			return await _businessPresentation.AcceptBusinessRequest(businessId);
 		}
 
-		[Authorize]
+		[Authorize(Roles = "CityManager")]
 		[HttpPost("reject-business-application")]
 		public async Task<ActionResult<bool>> RejectBusinessRequest(RejectApplicationDto rejectApplicationDto)
 		{
@@ -80,7 +82,7 @@ namespace API.Controllers
 			return await _businessPresentation.RespondVacancy(vacancyId, HttpContext.User);
 		}
 
-		[Authorize]
+		[Authorize(Roles = "BusinessOwner")]
 		[HttpGet("get-vacancies-respond/{businessId}")]
 		public async Task<ActionResult<TableData<VacancyRespondDto>>> GetRespondVacanciesForBusiness([FromQuery] TableParams tableParams, int businessId)
 		{
@@ -94,21 +96,21 @@ namespace API.Controllers
 			return await _businessPresentation.GetUserRespondVacancies(tableParams, HttpContext.User);
 		}
 
-		[Authorize]
+		[Authorize(Roles = "BusinessOwner")]
 		[HttpGet("get-workers/{businessId}")]
 		public async Task<ActionResult<TableData<WorkerDto>>> GetBusinessWorkers([FromQuery] TableParams tableParams, int businessId)
 		{
 			return await _businessPresentation.GetBusinessWorkers(tableParams, businessId);
 		}
 
-		[Authorize]
+		[Authorize(Roles = "BusinessOwner")]
 		[HttpPatch("accept-worker/{vacancyApplicationId}")]
 		public async Task<ActionResult<bool>> AcceptWorker(int vacancyApplicationId)
 		{
 			return await _businessPresentation.AcceptWorker(vacancyApplicationId);
 		}
 
-		[Authorize]
+		[Authorize(Roles = "BusinessOwner")]
 		[HttpDelete("dismiss-worker/{id}")]
 		public async Task<ActionResult<bool>> DismissWoker(int id)
 		{

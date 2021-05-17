@@ -14,7 +14,11 @@
         <div class="dropdown p-2" dropdown>
           <a class="dropdown-toggle" style="cursor: pointer;" dropdownToggle>City managment</a>
           <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;" *dropdownMenu>
-            <a class="p-2 text-nowrap dropdown-item" routerLink="/city-managment/business-applications" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Business Applications</a>
+            <a *appHasRole="['CityManager']"
+               class="p-2 text-nowrap dropdown-item"
+               routerLink="/city-managment/business-applications"
+               routerLinkActive="active"
+               [routerLinkActiveOptions]="{exact: true}">Business Applications</a>
             <a class="p-2 text-nowrap dropdown-item" routerLink="/business/vacancy-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Vacancies</a>
           </div>
         </div>

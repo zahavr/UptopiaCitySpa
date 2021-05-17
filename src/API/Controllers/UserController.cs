@@ -60,7 +60,7 @@ namespace API.Controllers
 				return fileUri.AbsoluteUri + $"?t={DateTime.Now}";
 			}
 
-			return BadRequest(new ApiResponse(401));
+			return BadRequest(new ApiResponse(400));
 		}
 
 		[Authorize]
@@ -125,7 +125,7 @@ namespace API.Controllers
 
 		[Authorize]
 		[HttpGet("reject-friend-request/{id}")]
-		public async Task<ActionResult<bool>> RejectFrientRequest(int id)
+		public async Task<ActionResult<ApiResponse>> RejectFrientRequest(int id)
 		{
 			if (await _userPresentation.RejectFriend(id))
 			{
@@ -151,11 +151,14 @@ namespace API.Controllers
 
 		[Authorize]
 		[HttpDelete("delete-friend/{id}")]
-		public async Task<ActionResult<bool>> DeleteFriend(int id)
+		public async Task<ActionResult<ApiResponse>> DeleteFriend(int id)
 		{
-			await _userPresentation.DeleteFriendAsync(id);
+			if (await _userPresentation.DeleteFriendAsync(id))
+			{
+				return Ok();
+			}
 
-			return Ok();
+			return BadRequest(new ApiResponse(400, "Cannot delete this friend"));
 		}
 	}
 }

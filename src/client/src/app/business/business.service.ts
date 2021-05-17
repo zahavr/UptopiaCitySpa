@@ -7,7 +7,7 @@ import {DefaultParams} from '../shared/params/defaultParams';
 import {map} from 'rxjs/operators';
 import {ITableData} from '../shared/interfaces/tableData.interface';
 import {TableParams} from '../shared/params/tableParams';
-import {RecursiveTemplateAstVisitor} from '@angular/compiler';
+import {IApiResponse} from '../shared/interfaces/api-response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -112,5 +112,11 @@ export class BusinessService {
     params = params.append('tableSkip', tableParams.tableSkip.toString());
 
     return params;
+  }
+
+  createBusinessRequest(values: any): Observable<IApiResponse> {
+    return this.http.post(this.baseUrl + ApiUrl.Business.CreateBusinessRequest, values).pipe(
+      map((res: IApiResponse) => res)
+    );
   }
 }

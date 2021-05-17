@@ -6,6 +6,7 @@ import {DefaultParams} from '../shared/params/defaultParams';
 import {IPagination} from '../shared/interfaces/pagination.interface';
 import {map} from 'rxjs/operators';
 import {ICardBuilding} from '../shared/interfaces/building.interface';
+import {IApiResponse} from '../shared/interfaces/api-response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -39,9 +40,15 @@ export class BuildingService {
     );
   }
 
-  buyAppartament(id: number): Observable<object>{
+  buyAppartament(id: number): Observable<IApiResponse>{
     return this.http.get(this.baseUrl + ApiUrl.Building.BuyAppartament.replace(':id', `${id}`)).pipe(
-      map(res => res)
+      map((res: IApiResponse) => res)
+    );
+  }
+
+  creatNewBuilding(value: any): Observable<IApiResponse> {
+    return this.http.post(this.baseUrl + ApiUrl.Building.CreateNewBuilding, value).pipe(
+      map((res: IApiResponse) => res)
     );
   }
 }
