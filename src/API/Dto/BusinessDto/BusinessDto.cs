@@ -5,13 +5,17 @@ namespace API.Dto.BusinessDto
 	public class BusinessDto
     {
 		public int Id { get; set; }
-		[Required]
+
+		[Required(ErrorMessage = "Please fill name for your business")]
 		public string Name { get; set; }
-		[Required]
+
+		[Required(ErrorMessage = "Please describe you business")]
 		public string Description { get; set; }
-		[Required]
+
+		[Required(ErrorMessage = "Please enter your address")]
 		public string Address { get; set; }
-		[Required]
+
+		[Required(ErrorMessage = "Please enter count of workers")]
 		public int MaxCountOfWorker { get; set; }
 	}
 }

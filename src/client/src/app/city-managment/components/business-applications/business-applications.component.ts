@@ -6,6 +6,7 @@ import {ITableData} from '../../../shared/interfaces/tableData.interface';
 import {ToastrService} from 'ngx-toastr';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {BsModalService} from 'ngx-bootstrap/modal';
+import {IApiResponse} from '../../../shared/interfaces/api-response.interface';
 
 @Component({
   selector: 'app-business-applications',
@@ -44,11 +45,9 @@ export class BusinessApplicationsComponent implements OnInit {
   }
 
   acceptBusiness(id: number): void {
-    this.cityManagmentService.acceptBusinessRequest(id).subscribe((res: boolean) => {
-      if (res) {
-        this.toastrService.success('Business was accepted');
+    this.cityManagmentService.acceptBusinessRequest(id).subscribe((res: IApiResponse) => {
+        this.toastrService.success(res.message);
         this.getBusinessApplications();
-      }
     }, error => {
       this.toastrService.error(error);
     });

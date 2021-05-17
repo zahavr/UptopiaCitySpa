@@ -7,6 +7,6 @@ namespace Core.Interfaces
 	public interface IBuildingService
     {
         Task<bool> AddBuildingAsync(Building building);
-		Task<bool> BuyAppartamentsAsync(User user, int appartamentId);
+		Task<ResultWithMessage> BuyAppartamentsAsync(User user, int appartamentId);
 	}
 }

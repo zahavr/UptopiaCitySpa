@@ -1,4 +1,5 @@
 ﻿using API.Dto.BusinessDto;
+using API.Errors;
 using API.Extensions;
 using API.Helpers;
 using AutoMapper;
@@ -43,33 +44,43 @@ namespace API.Presentation
 			_businessWorkerRepository = businessWorkerRepository;
 		}
 
-		public async Task<bool> AcceptBusinessRequest(int businessId)
+		public async Task<ActionResult<ApiResponse>> AcceptBusinessRequest(int businessId)
 		{
 			Business business = await _businessRepository.GetByIdAsync(businessId);
 
-			if (!await _businessService.AcceptBusinessRequest(business)) return false;
+			if (!await _businessService.AcceptBusinessRequest(business))
+			{
+				return new BadRequestObjectResult(new ApiResponse(400, "Cannot accept this business"));
+			};
 
 			User user = await _userManager.FindByIdAsync(business.OwnerId);
 
 			if (await _userManager.IsInRoleAsync(user, "BusinessOwner"))
-				return true;
+				return new OkObjectResult(new ApiResponse(200, "You accepted business request"));
 
-			IdentityResult addRoleResut = await _userManager.AddToRoleAsync(user, "BusinessOwner");
+			IdentityResult addRoleResult = await _userManager.AddToRoleAsync(user, "BusinessOwner");
 
-			return addRoleResut.Succeeded;
+			return addRoleResult.Succeeded
+				? new OkObjectResult(new ApiResponse(200, "You accepted business request"))
+				: new BadRequestObjectResult(new ApiResponse(400, "Cannot accept this business"));
 		}
 
-		public async Task<bool> CreateBusinessRequest(BusinessDto businessDto)
+		public async Task<ActionResult<ApiResponse>> CreateBusinessRequest(BusinessDto businessDto)
 		{
 			Business business = _mapper.Map<BusinessDto, Business>(businessDto);
 			User user = await _userManager.FindByIdAsync(business.OwnerId);
 
-			if (_businessService.IsHasMoneyForOpenBusiness(user, business.MaxCountOfWorker))
+			if (!_businessService.IsHasMoneyForOpenBusiness(user, business.MaxCountOfWorker))
 			{
-				return await _businessService.CreateBusinessRequest(business);
+				return new BadRequestObjectResult(new ApiResponse(400, "You need more money, for open this business."));
 			}
 
-			return false;
+			if (await _businessService.CreateBusinessRequest(business))
+			{
+				return new OkObjectResult(new ApiResponse(200, "Request status is pending. Please waiting"));
+			}
+
+			return new BadRequestObjectResult(new ApiResponse(400, "Somthing wrong. Try later"));
 		}
 
 		public async Task<bool> CreateVacancy(BusinessVacancyDto businessVacancyDto)

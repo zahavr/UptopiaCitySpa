@@ -3,6 +3,8 @@ import {DefaultParams} from '../../../shared/params/defaultParams';
 import {BusinessService} from '../../business.service';
 import {IPagination} from '../../../shared/interfaces/pagination.interface';
 import {IBusiness} from '../../../shared/interfaces/business.interface';
+import {BsModalService} from 'ngx-bootstrap/modal';
+import {CreateBusinessRequestComponent} from './create-business-request/create-business-request.component';
 
 @Component({
   selector: 'app-business-list',
@@ -14,7 +16,8 @@ export class BusinessListComponent implements OnInit {
   defaultParams = new DefaultParams();
   totalCount: number;
 
-  constructor(private businessService: BusinessService) { }
+  constructor(private businessService: BusinessService,
+              private modalService: BsModalService) { }
 
   ngOnInit(): void {
     this.loadBusinesses();
@@ -34,5 +37,12 @@ export class BusinessListComponent implements OnInit {
       this.defaultParams.pageIndex = event;
       this.loadBusinesses();
     }
+  }
+
+  createNewBusiness(): void {
+    this.modalService.show(CreateBusinessRequestComponent, {
+      class: 'modal-dialog-centered modal-lg',
+      backdrop: true,
+    });
   }
 }

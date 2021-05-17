@@ -1,0 +1,44 @@
+<div class="p-2">
+  <form [formGroup]="createBusinessForm" (ngSubmit)="sendRequest()">
+    <div class="form-label-group">
+      <input id="countAppartaments"
+             #countAppartamentsInput
+             class="form-control mb-3"
+             type="number"
+             formControlName="countAppartaments"
+             placeholder="Count of appartaments"
+             [ngClass]="formControls.countAppartaments.touched ?
+                  !formControls.countAppartaments.valid ? 'is-invalid' : 'is-valid' : null"
+             (input)="setCountOfAppartaments(countAppartamentsInput.value)">
+      <label for="countAppartaments">Count of appartaments</label>
+      <div class="invalid-feedback d-block"
+           *ngIf="formControls.countAppartaments.errors?.required && formControls.countAppartaments.touched">
+        <span>Count appartaments is required</span>
+      </div>
+    </div>
+    <app-text-input formControlName="countFloor" [type]="'text'" [label]="'Count of floor'"></app-text-input>
+    <app-text-input formControlName="street" [type]="'text'" [label]="'Street'"></app-text-input>
+    <accordion [isAnimated]="true">
+    <div *ngFor="let appartament of appartamentsControl; let i = index">
+        <accordion-group heading="Appartament {{i}}">
+          <div [formGroup]="appartament">
+            <app-text-input formControlName="title" [label]="'Name appartament'" [type]="'text'"></app-text-input>
+            <app-text-input formControlName="description" [label]="'Description'" [type]="'text'"></app-text-input>
+            <app-text-input formControlName="countRooms" [label]="'Count rooms'" [type]="'number'"></app-text-input>
+            <app-text-input formControlName="floor" [label]="'Floor'" [type]="'number'"></app-text-input>
+            <select  class="form-control" formControlName="typeAppartament" id="typeAppartament">
+              <option  [defaultSelected]="true" [ngValue]="categoryType.Econom">{{categoryType[categoryType.Econom]}}</option>
+              <option [ngValue]="categoryType.Comfort">{{categoryType[categoryType.Comfort]}}</option>
+              <option [ngValue]="categoryType.Luxe">{{categoryType[categoryType.Luxe]}}</option>
+            </select>
+            <app-text-input formControlName="pictureUrl" [type]="'text'" [label]="'Appartament photo'"></app-text-input>
+            <app-text-input formControlName="cost" [label]="'Cost'" [type]="'number'"></app-text-input>
+          </div>
+        </accordion-group>
+    </div>
+    </accordion>
+    <div class="d-flex justify-content-end mr-3 mt-2">
+      <button class="btn btn-success" type="submit" [disabled]="createBusinessForm.invalid">Send</button>
+    </div>
+  </form>
+</div>

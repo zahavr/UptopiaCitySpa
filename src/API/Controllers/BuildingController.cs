@@ -34,30 +34,24 @@ namespace API.Controllers
 			return Ok(await _buildingPresentation.GetAppartaments(buildingSpec));
 		}
 
-		[Authorize]
+		[Authorize(Roles = "CityManager")]
 		[HttpPost("add-building")]
-		public async Task<ActionResult<BuildingDto>> AddNewBuilding(BuildingDto buildingDto)
+		public async Task<ActionResult<ApiResponse>> AddNewBuilding(BuildingDto buildingDto)
 		{
-			if (buildingDto.CountApartments < buildingDto.Appartaments.Count)
+			if (buildingDto.CountAppartaments < buildingDto.Appartaments.Count)
 				return BadRequest(new ApiResponse(400, "The number of apartments cannot be greater than the number of possible ones"));
 
-			if (await _buildingPresentation.AddNewBuildingAsync(buildingDto))
-				return Ok("You created new building");
-
-			return BadRequest(new ApiResponse(400));
+			return await _buildingPresentation.AddNewBuildingAsync(buildingDto);
 		}
 
 		[Authorize]
 		[HttpGet("buy-appartaments/{id}")]
-		public async Task<ActionResult<bool>> BuyAppartament(int id)
+		public async Task<ActionResult<ApiResponse>> BuyAppartament(int id)
 		{
 			User user = await _userManager
 				.FindByEmailFromClaimsPrincipals(HttpContext.User);
 
-			if (await _buildingPresentation.BuyNewAppartamentAsync(user, id))
-				return Ok();
-
-			return BadRequest(new ApiResponse(400, "Cannot buy this appartament"));
+			return await _buildingPresentation.BuyNewAppartamentAsync(user, id);
 		}
 
 		[Authorize]

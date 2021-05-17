@@ -12,6 +12,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import {PaginationModule} from 'ngx-bootstrap/pagination';
 import { HasRoleDirective } from './directives/has-role.directive';
 import {TableModule} from 'primeng-lts/table';
+import {AccordionModule} from 'ngx-bootstrap/accordion';
 
 
 
@@ -31,6 +32,7 @@ import {TableModule} from 'primeng-lts/table';
     TabsModule.forRoot(),
     ModalModule.forRoot(),
     PaginationModule.forRoot(),
+    AccordionModule.forRoot(),
     TableModule,
   ],
     exports: [
@@ -46,7 +48,8 @@ import {TableModule} from 'primeng-lts/table';
         PaginationModule,
         PaginationComponent,
         HasRoleDirective,
-        TableModule
+        TableModule,
+        AccordionModule
     ]
 })
 export class SharedModule { }

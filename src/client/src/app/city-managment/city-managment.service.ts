@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {ITableData} from '../shared/interfaces/tableData.interface';
 import {ApiUrl} from '../shared/constants/shared.url.constants';
 import {map} from 'rxjs/operators';
+import {IApiResponse} from '../shared/interfaces/api-response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -27,10 +28,10 @@ export class CityManagmentService {
       );
   }
 
-  acceptBusinessRequest(businessId: number): Observable<boolean> {
+  acceptBusinessRequest(businessId: number): Observable<IApiResponse> {
     return this.http.patch(this.baseUrl + ApiUrl.Business.AcceptBusiness.replace(':businessId', `${businessId}`), {})
       .pipe(
-        map((res: boolean) => res)
+        map((res: IApiResponse) => res)
       );
   }
 

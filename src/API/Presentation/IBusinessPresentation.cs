@@ -1,4 +1,5 @@
 ﻿using API.Dto.BusinessDto;
+using API.Errors;
 using API.Helpers;
 using Core.Specification;
 using Microsoft.AspNetCore.Mvc;
@@ -9,8 +10,8 @@ namespace API.Presentation
 {
 	public interface IBusinessPresentation
     {
-        Task<bool> CreateBusinessRequest(BusinessDto businessDto);
-		Task<bool> AcceptBusinessRequest(int businessId);
+        Task<ActionResult<ApiResponse>> CreateBusinessRequest(BusinessDto businessDto);
+		Task<ActionResult<ApiResponse>> AcceptBusinessRequest(int businessId);
 		Task<bool> RejectBusinessRequest(RejectApplicationDto rejectApplicationDto);
 		Task<bool> CreateVacancy(BusinessVacancyDto businessVacancyDto);
 		Task<bool> RespondVacancy(int vacancyId, ClaimsPrincipal user);

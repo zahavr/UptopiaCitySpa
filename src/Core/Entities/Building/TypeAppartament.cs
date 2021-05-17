@@ -9,6 +9,6 @@ namespace Core.Entities
         [EnumMember(Value = "Comfort")]
         Comfort,
         [EnumMember(Value = "Luxe")]
-        Luxe
+        Luxe 
     }
 }

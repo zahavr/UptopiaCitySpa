@@ -28,11 +28,13 @@ export const ApiUrl = {
     GetAppartaments: 'api/building/get-appartaments',
     GetAppartament: 'api/building/get-appartament/:id',
     GetRandomAppartaments: 'api/building/get-random-appartaments',
-    BuyAppartament: 'api/building/buy-appartaments/:id'
+    BuyAppartament: 'api/building/buy-appartaments/:id',
+    CreateNewBuilding: 'api/building/add-building'
   },
   Business: {
     GetBusinessApplications: 'api/business/get-business-requests',
     AcceptBusiness: 'api/business/accept-business-request/:businessId',
+    CreateBusinessRequest: 'api/business/create-business-request',
     RejectBusiness: 'api/business/reject-business-application',
     GetUserBusiness: 'api/business/get-my-business',
     GetUserApplications: 'api/business/user-business-applications',
@@ -43,6 +45,6 @@ export const ApiUrl = {
     GetVacanciesRespond: 'api/business/get-vacancies-respond/:businessId',
     AcceptWorker: 'api/business/accept-worker/:vacancyApplicationId',
     GetWorkers: 'api/business/get-workers/:businessId',
-    DismissWorker: 'api/business/dismiss-worker/:id'
+    DismissWorker: 'api/business/dismiss-worker/:id',
   }
 };
