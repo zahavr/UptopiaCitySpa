@@ -55,6 +55,15 @@ export class AccountService {
     return this.http.get(this.baseUrl + ApiUrl.Account.EmailExists.replace(':email', email));
   }
 
+  getToken(): string {
+    let token = '';
+    this.currentUser$.subscribe(res => {
+      token = res.token;
+    }).unsubscribe();
+
+    return token;
+  }
+
   validateEmailNotTaken(): AsyncValidatorFn {
     return control => {
       return timer(500).pipe(
@@ -78,7 +87,6 @@ export class AccountService {
     Array.isArray(roles) ? user.roles = roles : user.roles.push(roles);
     localStorage.setItem('token', user.token);
     localStorage.setItem('roles', JSON.stringify(user.roles));
-    console.log(user);
     this.currentUserSource.next(user);
   }
 

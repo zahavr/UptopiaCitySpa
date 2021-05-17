@@ -1,0 +1,51 @@
+<div style="height: 760px; width: 800px">
+  <div *ngIf="!userJoined" class="text-center d-flex flex-column justify-content-end text-uppercase"
+       style="min-height: 350px">
+    <p>Please do not close the dialog, the user is notified that you want to communicate with him.</p>
+    <i class="fa fa-spinner fa-spin" style="font-size: 1.3em"></i>
+  </div>
+  <div *ngIf="userJoined" class="p-2">
+    <div class="d-flex justify-content-end">
+      <i class="fa fa-close p-2" (click)="closeDialog()"></i>
+    </div>
+    <h4 class="text-center text-uppercase">User connected. Enjoy</h4>
+    <div class="message-field">
+      <div class="chat">
+        <div class="chat-history">
+          <ul class="list-unstyled">
+            <li class="clearfix mx-2" *ngFor="let message of messages">
+              <div *ngIf="message.typeMessage === typeMessage.Recieve">
+                <div class="message-data align-right" >
+                  <span class="message-data-time">{{message.date | date : 'medium'}}</span> &nbsp; &nbsp;
+                  <span class="message-data-name mr-2">{{message.sender}}</span> <i class="fa fa-circle me"></i>
+                </div>
+                <div class="message other-message float-right">
+                  {{message.messageText}}
+                </div>
+              </div>
+              <div *ngIf="message.typeMessage === typeMessage.Send">
+                <div class="message-data" >
+                  <span class="message-data-name"><i class="fa fa-circle online"></i> {{message.sender}}</span>
+                  <span class="message-data-time">{{message.date | date : 'medium' }}</span>
+                </div>
+                <div class="message my-message">
+                  {{message.messageText}}
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="input-group my-3 w-100">
+      <input type="text" class="form-control"
+             placeholder="Message..."
+             aria-label="Message..."
+             aria-describedby="basic-addon2"
+             #messageInput>
+      <div class="input-group-append">
+        <button class="btn btn-success" type="button" (click)="sendMessage(messageInput.value)">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
