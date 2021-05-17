@@ -42,6 +42,7 @@ namespace API.Helpers.MapperProfiles
 				.ForMember(f => f.BirthDateUser, opt => opt.MapFrom(u => u.BirthDate))
 				.ForMember(f => f.UserEmail, opt => opt.MapFrom(u => u.Email));
 
+			CreateMap<RoleDto, Role>();
 		}
     }
 }

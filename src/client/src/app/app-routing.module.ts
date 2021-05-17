@@ -31,6 +31,14 @@ const routes: Routes = [
     path: 'friends',
     loadChildren: () => import('./friends/friends.module').then(mod => mod.FriendsModule),
   },
+  {
+    path: 'city-managment',
+    loadChildren: () => import('./city-managment/city-managment.module').then(mod => mod.CityManagmentModule)
+  },
+  {
+    path: 'business',
+    loadChildren: () => import('./business/business.module').then(mod => mod.BusinessModule)
+  },
   {path: '**', redirectTo: 'not-found', pathMatch: 'full'}
 ];
 

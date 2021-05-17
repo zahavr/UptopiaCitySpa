@@ -11,6 +11,8 @@ import {ModalModule} from 'ngx-bootstrap/modal';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import {PaginationModule} from 'ngx-bootstrap/pagination';
 import { HasRoleDirective } from './directives/has-role.directive';
+import {TableModule} from 'primeng-lts/table';
+import {AccordionModule} from 'ngx-bootstrap/accordion';
 
 
 
@@ -29,20 +31,25 @@ import { HasRoleDirective } from './directives/has-role.directive';
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ModalModule.forRoot(),
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    AccordionModule.forRoot(),
+    TableModule,
   ],
-  exports: [
-    TextInputComponent,
-    ReactiveFormsModule,
-    TextInputComponent,
-    BsDatepickerModule,
-    DateInputComponent,
-    NgxMaskModule,
-    BsDropdownModule,
-    TabsModule,
-    ModalModule,
-    PaginationModule,
-    PaginationComponent
-  ]
+    exports: [
+        TextInputComponent,
+        ReactiveFormsModule,
+        TextInputComponent,
+        BsDatepickerModule,
+        DateInputComponent,
+        NgxMaskModule,
+        BsDropdownModule,
+        TabsModule,
+        ModalModule,
+        PaginationModule,
+        PaginationComponent,
+        HasRoleDirective,
+        TableModule,
+        AccordionModule
+    ]
 })
 export class SharedModule { }

@@ -2,10 +2,11 @@ import {Inject, Injectable} from '@angular/core';
 import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {ApiUrl} from '../shared/constants/shared.url.constants';
-import {BuildingParams} from '../shared/params/buildingParams';
+import {DefaultParams} from '../shared/params/defaultParams';
 import {IPagination} from '../shared/interfaces/pagination.interface';
 import {map} from 'rxjs/operators';
 import {ICardBuilding} from '../shared/interfaces/building.interface';
+import {IApiResponse} from '../shared/interfaces/api-response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class BuildingService {
   constructor(private http: HttpClient,
               @Inject('BASE_URL') private baseUrl) { }
 
-  getAppartaments(buildingParams: BuildingParams): Observable<IPagination> {
+  getAppartaments(buildingParams: DefaultParams): Observable<IPagination> {
     let params: HttpParams = new HttpParams();
 
     params = params.append('pageIndex', buildingParams.pageIndex.toString());
@@ -39,9 +40,15 @@ export class BuildingService {
     );
   }
 
-  buyAppartament(id: number): Observable<object>{
+  buyAppartament(id: number): Observable<IApiResponse>{
     return this.http.get(this.baseUrl + ApiUrl.Building.BuyAppartament.replace(':id', `${id}`)).pipe(
-      map(res => res)
+      map((res: IApiResponse) => res)
+    );
+  }
+
+  creatNewBuilding(value: any): Observable<IApiResponse> {
+    return this.http.post(this.baseUrl + ApiUrl.Building.CreateNewBuilding, value).pipe(
+      map((res: IApiResponse) => res)
     );
   }
 }

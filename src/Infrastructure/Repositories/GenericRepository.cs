@@ -43,6 +43,11 @@ namespace Infrastructure.Repositories
 			_context.Set<T>().Remove(entity);
 		}
 
+		public  IQueryable<T> GetAll()
+		{
+			return _context.Set<T>().AsQueryable();
+		}
+
 		public async Task<T> GetByIdAsync(int id)
 		{
 			return await _context.Set<T>().FindAsync(id);

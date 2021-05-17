@@ -1,11 +1,14 @@
 ﻿using Core.Entities.Identity;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace API.Extensions
 {
@@ -21,7 +24,7 @@ namespace API.Extensions
 			builder.AddEntityFrameworkStores<AppIdentityDbContext>();
 			builder.AddSignInManager<SignInManager<User>>();
 
-			
+
 			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 			.AddJwtBearer(opt =>
 			{
@@ -32,6 +35,23 @@ namespace API.Extensions
 					ValidIssuer = configuration["Token:Issuer"],
 					ValidateIssuer = false,
 					ValidateAudience = false
+				};
+
+				opt.Events = new JwtBearerEvents
+				{
+					OnMessageReceived = context =>
+					{
+						StringValues accessToken = context.Request.Query["access_token"];
+
+						PathString path = context.HttpContext.Request.Path;
+						if (!string.IsNullOrEmpty(accessToken) &&
+								(path.StartsWithSegments("/message")))
+						{
+							context.Token = accessToken;
+						}
+
+						return Task.CompletedTask;
+					}
 				};
 			});
 

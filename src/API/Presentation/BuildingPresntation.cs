@@ -1,10 +1,13 @@
 ﻿using API.Dto.BuildingDto;
+using API.Errors;
 using API.Helpers;
 using AutoMapper;
+using Core;
 using Core.Entities;
 using Core.Entities.Identity;
 using Core.Interfaces;
 using Core.Specification.BuildingSpecification;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -26,16 +29,28 @@ namespace API.Presentation
 			_mapper = mapper;
 		}
 
-		public Task<bool> AddNewBuildingAsync(BuildingDto buildingDto)
+		public async Task<ActionResult<ApiResponse>> AddNewBuildingAsync(BuildingDto buildingDto)
 		{
 			Building building = _mapper.Map<BuildingDto, Building>(buildingDto);
 
-			return _buildingService.AddBuildingAsync(building);
+			if (await _buildingService.AddBuildingAsync(building))
+			{
+				return new OkObjectResult(new ApiResponse(200, "You created new building"));
+			}
+
+			return new BadRequestObjectResult(new ApiResponse(400));
 		}
 
-		public async Task<bool> BuyNewAppartamentAsync(User user, int appartamentId)
+		public async Task<ActionResult<ApiResponse>> BuyNewAppartamentAsync(User user, int appartamentId)
 		{
-			return await _buildingService.BuyAppartamentsAsync(user, appartamentId);
+			ResultWithMessage result = await _buildingService.BuyAppartamentsAsync(user, appartamentId);
+
+			if (result.IsSuccess)
+			{
+				return new OkObjectResult(new ApiResponse(200, result.Message));
+			} 
+
+			return new BadRequestObjectResult(new ApiResponse(400, result.Message));
 		}
 
 		public async Task<Pagination<AppartamentViewDto>> GetAppartaments(BuildingSpecParams buildingSpecParams)

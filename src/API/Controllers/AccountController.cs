@@ -48,6 +48,10 @@ namespace API.Controllers
 
 			if (!result.Succeeded) return BadRequest();
 
+			IdentityResult resulForRole = await _userManager.AddToRoleAsync(user, "Citizen");
+
+			if (!resulForRole.Succeeded) return BadRequest();
+
 			return new UserDto
 			{
 				Money = user.Money,

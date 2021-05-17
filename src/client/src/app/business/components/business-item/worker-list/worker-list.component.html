@@ -1,0 +1,33 @@
+<p-table
+  [value]="workers"
+  [lazy]="true"
+  [paginator]="true"
+  [rows]="8"
+  [totalRecords]="totalCount"
+  [loading]="loading"
+  (onLazyLoad)="onChanePage($event)"
+  class="p-3"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Position</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Salary</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-worker>
+    <tr>
+      <td>{{worker.positionAtWork}}</td>
+      <td>{{worker.firstName}}</td>
+      <td>{{worker.lastName}}</td>
+      <td>{{worker.salary}}</td>
+      <td>
+        <div class="btn-group">
+          <button class="btn btn-danger" (click)="dismissWorker(worker.id)">Dismiss</button>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

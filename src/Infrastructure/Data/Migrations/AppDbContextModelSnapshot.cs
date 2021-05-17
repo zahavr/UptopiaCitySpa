@@ -43,6 +43,9 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int>("Floor")
                         .HasColumnType("int");
 
+                    b.Property<string>("PictureUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(40)
@@ -68,7 +71,7 @@ namespace Infrastructure.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CountApartments")
+                    b.Property<int>("CountAppartments")
                         .HasColumnType("int");
 
                     b.Property<int>("CountFloor")
@@ -83,6 +86,107 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("Buildings", "HousingSystem");
 
                     b.ToView("Buildings", "HousingSystem");
+                });
+
+            modelBuilder.Entity("Core.Entities.Business", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("BusinessStatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateConfirmation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("MaxCountOfWorker")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Business", "Business");
+
+                    b.ToView("Business", "Business");
+                });
+
+            modelBuilder.Entity("Core.Entities.BusinessWorker", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BusinessId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PositionAtWork")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<decimal>("Salary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("StartWork")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("WorkerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusinessId");
+
+                    b.ToTable("BusinessWorkers", "Business");
+
+                    b.ToView("BusinessWorkers", "Business");
+                });
+
+            modelBuilder.Entity("Core.Entities.RejectedApplications", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
+
+                    b.Property<DateTime>("ExpiredDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RejectedApplications", "Business");
+
+                    b.ToView("RejectedApplications", "Business");
                 });
 
             modelBuilder.Entity("Core.Entities.User.Friend", b =>
@@ -158,6 +262,64 @@ namespace Infrastructure.Data.Migrations
                     b.ToView("UserAppartament", "HousingSystem");
                 });
 
+            modelBuilder.Entity("Core.Entities.Vacancy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BusinessId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<decimal>("Salary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusinessId");
+
+                    b.ToTable("Vacancies", "Business");
+
+                    b.ToView("Vacancies", "Business");
+                });
+
+            modelBuilder.Entity("Core.Entities.VacancyApplications", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VacancyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VacancyStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VacancyId");
+
+                    b.ToTable("VacancyApplications", "Business");
+
+                    b.ToView("VacancyApplications", "Business");
+                });
+
             modelBuilder.Entity("Core.Entities.Appartament", b =>
                 {
                     b.HasOne("Core.Entities.Building", "Building")
@@ -165,6 +327,17 @@ namespace Infrastructure.Data.Migrations
                         .HasForeignKey("BuildingId");
 
                     b.Navigation("Building");
+                });
+
+            modelBuilder.Entity("Core.Entities.BusinessWorker", b =>
+                {
+                    b.HasOne("Core.Entities.Business", "Business")
+                        .WithMany("BusinessWorkers")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business");
                 });
 
             modelBuilder.Entity("Core.Entities.UserAppartament", b =>
@@ -178,6 +351,28 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("Appartament");
                 });
 
+            modelBuilder.Entity("Core.Entities.Vacancy", b =>
+                {
+                    b.HasOne("Core.Entities.Business", "Business")
+                        .WithMany("Vacancies")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Business");
+                });
+
+            modelBuilder.Entity("Core.Entities.VacancyApplications", b =>
+                {
+                    b.HasOne("Core.Entities.Vacancy", "Vacancy")
+                        .WithMany("VacancyApplications")
+                        .HasForeignKey("VacancyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Vacancy");
+                });
+
             modelBuilder.Entity("Core.Entities.Appartament", b =>
                 {
                     b.Navigation("UserAppartaments");
@@ -186,6 +381,18 @@ namespace Infrastructure.Data.Migrations
             modelBuilder.Entity("Core.Entities.Building", b =>
                 {
                     b.Navigation("Appartaments");
+                });
+
+            modelBuilder.Entity("Core.Entities.Business", b =>
+                {
+                    b.Navigation("BusinessWorkers");
+
+                    b.Navigation("Vacancies");
+                });
+
+            modelBuilder.Entity("Core.Entities.Vacancy", b =>
+                {
+                    b.Navigation("VacancyApplications");
                 });
 #pragma warning restore 612, 618
         }

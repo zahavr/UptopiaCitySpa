@@ -10,5 +10,13 @@ export const AppRoute = {
   Building: {
     Main: 'main',
     Detail: ':id'
+  },
+  CityManagment: {
+    BusinessApplications: 'business-applications'
+  },
+  Business: {
+    Main: 'main',
+    RequestList: 'requests-list',
+    VacancyList: 'vacancy-list'
   }
 };

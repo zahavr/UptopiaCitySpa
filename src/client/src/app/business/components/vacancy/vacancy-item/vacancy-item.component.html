@@ -1,0 +1,20 @@
+<div class="card">
+  <div class="card-header">
+    <h4>Vacancy: {{vacancy.vacancyTitle}}</h4>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Company: {{vacancy.businessTitle}}</h5>
+    <p class="card-text">Description: {{vacancy.businessDescription}}</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">
+      <h5 class="card-title">Vacancy description:</h5>
+      <p class="card-text">{{vacancy.businessDescription}}</p>
+    </li>
+    <li class="list-group-item">Address: {{vacancy.address}}</li>
+    <li class="list-group-item">Salary: {{vacancy.salary | currency}}</li>
+  </ul>
+  <div class="card-footer">
+    <button class="btn btn-success" (click)="respondVacancy()">Respond</button>
+  </div>
+</div>

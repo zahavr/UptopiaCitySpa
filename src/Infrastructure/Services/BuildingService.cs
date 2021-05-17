@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using Core;
+using Core.Entities;
 using Core.Entities.Identity;
 using Core.Interfaces;
 using Core.Specification.BuildingSpecification;
@@ -27,11 +28,12 @@ namespace Infrastructure.Services
 			_unitOfWork.Repository<Appartament>()
 				.AddRange(building.Appartaments);
 
-			return await _unitOfWork.Complete() >= 1;
+			return await _unitOfWork.Complete();
 		}
 
-		public async Task<bool> BuyAppartamentsAsync(User user, int appartamentId)
+		public async Task<ResultWithMessage> BuyAppartamentsAsync(User user, int appartamentId)
 		{
+			ResultWithMessage result = new ResultWithMessage(false);
 			IGenericRepository<Appartament> appartamentRepo = _unitOfWork.Repository<Appartament>();
 
 			AppartamentWithUsersSpecification appartamentSpec = new AppartamentWithUsersSpecification(appartamentId);
@@ -39,13 +41,16 @@ namespace Infrastructure.Services
 			Appartament appartament = await appartamentRepo.GetEntityWithSpec(appartamentSpec);
 
 			if (appartament.Cost > user.Money)
-				return false;
-
-			if (appartament.UserAppartaments.Count > appartament.CountRooms)
-				return false;
+			{
+				result.Message = "You can`t buy this appartament. You need more money";
+				return result;
+			}
 
 			if (!await _userService.RecalculateMoney(user, appartament.Cost))
-				return false;
+			{
+				result.Message = "Cannot recalculate money";
+				return result;
+			}
 
 			UserAppartament ownerAppartament = new UserAppartament
 			{
@@ -56,7 +61,15 @@ namespace Infrastructure.Services
 			_unitOfWork.Repository<UserAppartament>()
 				.Add(ownerAppartament);
 
-			return await _unitOfWork.Complete() >= 1;
+			if (!await _unitOfWork.Complete())
+			{
+				result.Message = "Cannot complete operation please try later";
+				return result;
+			}
+
+			result.Message = "Congratulations! You bought new appartament";
+
+			return result;
 		}
 	}
 }

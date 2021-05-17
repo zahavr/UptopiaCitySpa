@@ -6,7 +6,17 @@
     </tab>
     <tab heading="Requests" (selectTab)="selectedTab($event)">
       <ng-container *ngIf="selectTab == 'Requests'">
-        <app-friend-request-list  [user]="user"></app-friend-request-list>
+        <app-friend-request-list [user]="user"></app-friend-request-list>
       </ng-container>
     </tab>
+  <tab heading="Vacancy" (selectTab)="selectedTab($event)">
+    <ng-container *ngIf="selectTab == 'Vacancy'">
+      <app-vacancies-responds></app-vacancies-responds>
+    </ng-container>
+  </tab>
+  <tab heading="Dialogs" (selectTab)="selectedTab($event)">
+    <ng-container *ngIf="selectTab == 'Dialogs'">
+      <app-dialog [dialogRequests]="dialogRequests"></app-dialog>
+    </ng-container>
+  </tab>
 </tabset>

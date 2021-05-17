@@ -1,0 +1,11 @@
+<div class="p-2">
+  <form [formGroup]="createBusinessForm" (ngSubmit)="sendRequest()">
+    <app-text-input formControlName="name" [type]="'text'" [label]="'Business name'"></app-text-input>
+    <app-text-input formControlName="description" [type]="'text'" [label]="'Description'"></app-text-input>
+    <app-text-input formControlName="address" [type]="'text'" [label]="'Address'"></app-text-input>
+    <app-text-input formControlName="maxCountOfWorker" [type]="'number'" [label]="'Count of workers'"></app-text-input>
+    <div class="d-flex justify-content-end mr-3">
+      <button class="btn btn-success" type="submit" [disabled]="createBusinessForm.invalid">Send</button>
+    </div>
+  </form>
+</div>

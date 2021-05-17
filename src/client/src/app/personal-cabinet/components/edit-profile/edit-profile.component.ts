@@ -20,7 +20,7 @@ export class EditProfileComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private accountService: AccountService,
-              private bsModal: BsModalRef,
+              private bsModal: BsModalService,
               private userService: UserService) { }
 
   ngOnInit(): void {

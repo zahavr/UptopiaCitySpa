@@ -50,7 +50,6 @@ export class ProfileInfoComponent implements OnInit {
       initialState});
 
     this.bsModalRef.content.newUserProfile.subscribe(userInfo => {
-      console.log(userInfo);
       this.userProfile = userInfo;
     });
   }

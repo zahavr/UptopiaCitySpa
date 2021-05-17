@@ -12,7 +12,7 @@ namespace Infrastructure.Data.Config
 			builder.ToView("Buildings", "HousingSystem");
 
 			builder.Property(b => b.CountFloor).IsRequired();
-			builder.Property(b => b.CountApartments).IsRequired();
+			builder.Property(b => b.CountAppartments).IsRequired();
 			builder.Property(b => b.Street).IsRequired();
 
 			builder

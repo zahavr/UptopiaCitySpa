@@ -10,5 +10,6 @@ namespace API.Dto.BuildingDto
 		public int Floor { get; set; }
 		public TypeAppartament TypeAppartament { get; set; }
 		public decimal Cost { get; set; }
+		public string PictureUrl { get; set; }
 	}
 }

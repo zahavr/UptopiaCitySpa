@@ -1,10 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {AsyncValidatorFn, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AccountService} from '../account.service';
 import {Router} from '@angular/router';
-import validate = WebAssembly.validate;
-import {of, timer} from 'rxjs';
-import {buffer, map, switchMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -13,6 +10,7 @@ import {buffer, map, switchMap} from 'rxjs/operators';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  maxDate = new Date();
   errors: string[];
 
   constructor(private fb: FormBuilder,

@@ -6,10 +6,11 @@ export interface ICardBuilding {
   cost: number;
   description: string;
   title: string;
+  pictureUrl: string;
 }
 
 export enum typeAppartament {
-  Econom,
-  Comfort,
-  Luxe
+  Econom = 0,
+  Comfort = 1,
+  Luxe = 2
 }

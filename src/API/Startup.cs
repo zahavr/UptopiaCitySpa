@@ -1,11 +1,14 @@
 using API.Extensions;
 using API.Helpers.MapperProfiles;
+using API.Hubs;
+using API.Hubs.Helpers;
 using API.Middleware;
 using Azure.Storage.Blobs;
 using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,11 +44,15 @@ namespace API
                 db.UseSqlServer(_configuration.GetConnectionString("IdentityConnection"));
             });
 
+            services.AddHttpContextAccessor();
             services.AddControllers();
             services.AddPresentation();
             services.AddServices();
             services.AddIdentityServices(_configuration);
-            services.AddAutoMapper(typeof(UserProfile));
+            services.AddSignalR();
+            services.AddSignalRCore();
+            services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+            services.AddAutoMapper(typeof(UserProfile), typeof(BuildingProfile), typeof(BusinessProfile));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -69,6 +76,7 @@ namespace API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<MessageHub>("/message");
             });
 
             app.UseSpa(spa =>

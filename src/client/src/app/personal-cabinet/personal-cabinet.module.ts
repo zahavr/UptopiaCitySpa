@@ -10,16 +10,20 @@ import { EditProfileComponent } from './components/edit-profile/edit-profile.com
 import { PhotoUploaderComponent } from './components/photo-uploader/photo-uploader.component';
 import {FileUploadModule} from 'ng2-file-upload';
 import {FriendsModule} from '../friends/friends.module';
+import {BusinessModule} from '../business/business.module';
+import { DialogComponent } from './components/personal-cabinet/dialog/dialog.component';
+import { ChatComponent } from './components/personal-cabinet/dialog/chat/chat.component';
 
 
 @NgModule({
-  declarations: [PersonalCabinetComponent, ProfileInfoComponent, ProfileMainComponent, EditProfileComponent, PhotoUploaderComponent],
+  declarations: [PersonalCabinetComponent, ProfileInfoComponent, ProfileMainComponent, EditProfileComponent, PhotoUploaderComponent, DialogComponent, ChatComponent],
   imports: [
     CommonModule,
     PersonalCabinetRoutingModule,
     SharedModule,
     FileUploadModule,
-    FriendsModule
+    FriendsModule,
+    BusinessModule
   ]
 })
 export class PersonalCabinetModule { }

@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ICardBuilding} from '../../../shared/interfaces/building.interface';
-import {BuildingParams} from '../../../shared/params/buildingParams';
+import {DefaultParams} from '../../../shared/params/defaultParams';
 import {BuildingService} from '../../building.service';
 import {IPagination} from '../../../shared/interfaces/pagination.interface';
+import {BsModalService} from 'ngx-bootstrap/modal';
+import {AddBuildingComponent} from '../add-building/add-building.component';
 
 @Component({
   selector: 'app-buildings',
@@ -11,10 +13,11 @@ import {IPagination} from '../../../shared/interfaces/pagination.interface';
 })
 export class BuildingsComponent implements OnInit {
   buildings: ICardBuilding[];
-  buildingParams = new BuildingParams();
+  buildingParams = new DefaultParams();
   totalCount: number;
 
-  constructor(private buildingService: BuildingService) {
+  constructor(private buildingService: BuildingService,
+              private modalService: BsModalService) {
   }
 
   ngOnInit(): void {
@@ -35,5 +38,12 @@ export class BuildingsComponent implements OnInit {
       this.buildingParams.pageIndex = event;
       this.getAppartaments();
     }
+  }
+
+  createNewBuilding(): void {
+    this.modalService.show(AddBuildingComponent, {
+      class: 'modal-lg',
+      backdrop: true,
+    })
   }
 }

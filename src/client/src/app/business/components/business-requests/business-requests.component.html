@@ -1,0 +1,30 @@
+<p-table
+  [value]="businessApplications"
+  [lazy]="true"
+  [paginator]="true"
+  [rows]="8"
+  [totalRecords]="totalCount"
+  [loading]="loading"
+  (onLazyLoad)="uploadBusinessApplications($event)"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Address</th>
+      <th>Count of workers</th>
+      <th>Status</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-businessApplication>
+    <tr>
+      <td>{{businessApplication.name}}</td>
+      <td>{{businessApplication.description}}</td>
+      <td>{{businessApplication.address}}</td>
+      <td>{{businessApplication.maxCountOfWorker}}</td>
+      <td>
+        <p>Pending...</p>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
