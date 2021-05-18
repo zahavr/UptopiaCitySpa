@@ -39,8 +39,8 @@ namespace Infrastructure.Services
 				claims.Add(new Claim(ClaimTypes.Role, userRole));
 			}
 
-			claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
-			claims.Add(new Claim(JwtRegisteredClaimNames.Name, user.UserName));
+			claims.Add(new Claim(ClaimTypes.Email, user.Email));
+			claims.Add(new Claim(ClaimTypes.Name, user.UserName));
 
 			SigningCredentials creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 
