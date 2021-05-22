@@ -1,0 +1,72 @@
+<p-contextMenu #contextMenu [model]="actions"></p-contextMenu>
+<div style="margin-top: 100px">
+  <p-table
+    [value]="users"
+    [lazy]="true"
+    [paginator]="true"
+    [rows]="8"
+    [totalRecords]="totalCount"
+    [loading]="loading"
+    (onLazyLoad)="uploadUsers($event)"
+    [(contextMenuSelection)]="selectedUser"
+    [contextMenu]="contextMenu"
+    selectionMode="single"
+    #userTable
+    class="mt-4"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="firstName">First Name <i class="fa fa-sort"></i></th>
+        <th>Last Name</th>
+        <th>Birth Date</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+      </tr>
+      <tr>
+        <th>
+          <input type="text"
+                 (input)="userTable.filter($event.target.value, 'FirstName', 'startsWith')"
+                 placeholder="First name..."
+                 class="p-column-filter form-control">
+        </th>
+        <th>
+          <input type="text"
+                 (input)="userTable.filter($event.target.value, 'LastName', 'contains')"
+                 placeholder="Last name..."
+                 class="p-column-filter form-control">
+        </th>
+        <th>
+          <input
+            bsDaterangepicker
+            #dateInput  class="p-column-filter form-control"
+            placeholder="Date range"
+            style="padding: 0 0 0 10px; font-size: 12px"
+            (bsValueChange)="userTable.filter(dateInput.value, 'DateRange', 'contains')"
+            type="text">
+        </th>
+        <th>
+          <input type="text"
+                 (input)="userTable.filter($event.target.value, 'Email', 'contains')"
+                 placeholder="Email..."
+                 class="p-column-filter form-control">
+        </th>
+        <th>
+          <input type="text"
+                 (input)="userTable.filter($event.target.value, 'PhoneNumber', 'contains')"
+                 placeholder="Phone number..."
+                 class="p-column-filter form-control">
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+      <tr [pContextMenuRow]="user">
+        <td>{{user.firstName}}</td>
+        <td>{{user.lastName}}</td>
+        <td>{{user.birthDate | date}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.phoneNumber}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+</div>

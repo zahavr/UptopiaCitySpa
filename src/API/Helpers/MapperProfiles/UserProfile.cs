@@ -18,6 +18,8 @@ namespace API.Helpers.MapperProfiles
 				.ReverseMap();
 
 			CreateMap<BaseUserDto, User>();
+			CreateMap<User, FullUserInfo>()
+				.ForMember(fu => fu.PictureUrl, opt => opt.MapFrom<UserForPoliceResolver>());
 
 			CreateMap<User, UserFriendViewDto>()
 				.ForMember(uf => uf.Id, opt => opt.Ignore())

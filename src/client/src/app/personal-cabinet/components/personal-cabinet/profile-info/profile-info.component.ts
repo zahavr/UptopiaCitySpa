@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {IUserProfile} from '../../../../shared/interfaces/user-profile.interface';
 import {UserService} from '../../../../shared/services/user.service';
 import {BsModalRef, BsModalService, ModalOptions} from 'ngx-bootstrap/modal';
 import {PhotoUploaderComponent} from '../../photo-uploader/photo-uploader.component';
 import {EditProfileComponent} from '../../edit-profile/edit-profile.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-profile-info',
@@ -15,7 +16,8 @@ export class ProfileInfoComponent implements OnInit {
   bsModalRef: BsModalRef;
 
   constructor(private userService: UserService,
-              private modalService: BsModalService) {
+              private modalService: BsModalService,
+              private router: Router) {
 
     this.userService.getNewPhotoUrl().subscribe(url => {
       if (url) {
@@ -25,9 +27,9 @@ export class ProfileInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUserProfile().subscribe((user: IUserProfile) => {
-      this.userProfile = user;
-    });
+      this.userService.getUserProfile().subscribe((user: IUserProfile) => {
+        this.userProfile = user;
+      });
   }
 
   openUploadDialog(): BsModalRef {

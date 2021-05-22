@@ -13,6 +13,7 @@ import {PaginationModule} from 'ngx-bootstrap/pagination';
 import { HasRoleDirective } from './directives/has-role.directive';
 import {TableModule} from 'primeng-lts/table';
 import {AccordionModule} from 'ngx-bootstrap/accordion';
+import {ContextMenuModule} from 'primeng-lts/contextmenu';
 
 
 
@@ -34,6 +35,7 @@ import {AccordionModule} from 'ngx-bootstrap/accordion';
     PaginationModule.forRoot(),
     AccordionModule.forRoot(),
     TableModule,
+    ContextMenuModule
   ],
     exports: [
         TextInputComponent,
@@ -49,7 +51,8 @@ import {AccordionModule} from 'ngx-bootstrap/accordion';
         PaginationComponent,
         HasRoleDirective,
         TableModule,
-        AccordionModule
+        AccordionModule,
+        ContextMenuModule
     ]
 })
 export class SharedModule { }

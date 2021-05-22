@@ -12,6 +12,16 @@
       <nav class="my-2 my-md-0 mr-md-3 text-uppercase d-flex" style="font-size: 0.9em" >
         <a class="p-2" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
         <div class="dropdown p-2" dropdown>
+          <a class="dropdown-toggle" style="cursor: pointer;" dropdownToggle>Police</a>
+          <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;" *dropdownMenu>
+            <a *appHasRole="['Sheriff', 'Officer']"
+               class="p-2 text-nowrap dropdown-item"
+               routerLink="/police/users"
+               routerLinkActive="active"
+               [routerLinkActiveOptions]="{exact: true}">Users</a>
+          </div>
+        </div>
+        <div class="dropdown p-2" dropdown>
           <a class="dropdown-toggle" style="cursor: pointer;" dropdownToggle>City managment</a>
           <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;" *dropdownMenu>
             <a *appHasRole="['CityManager']"

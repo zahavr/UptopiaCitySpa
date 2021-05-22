@@ -9,6 +9,13 @@ export interface ICardBuilding {
   pictureUrl: string;
 }
 
+export interface IPoliceAppartament {
+  title: string;
+  cost: number;
+  countRooms: number;
+  typeAppartament: typeAppartament;
+}
+
 export enum typeAppartament {
   Econom = 0,
   Comfort = 1,
