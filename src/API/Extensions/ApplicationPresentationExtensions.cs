@@ -10,6 +10,7 @@ namespace API.Extensions
 			services.AddScoped<IBuildingPresentation, BuildingPresntation>();
 			services.AddScoped<IUserPresentation, UserPresentation>();
 			services.AddScoped<IBusinessPresentation, BusinessPresentation>();
+			services.AddScoped<IPolicePresentation, PolicePresentation>();
 
 			return services;
 		}

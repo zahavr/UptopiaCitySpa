@@ -320,6 +320,45 @@ namespace Infrastructure.Data.Migrations
                     b.ToView("VacancyApplications", "Business");
                 });
 
+            modelBuilder.Entity("Core.Entities.Violation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CitizenId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateExpired")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<decimal>("Penalty")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("PolicemanId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("SetDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TypeViolation")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Violations", "Police");
+
+                    b.ToView("Violations", "Police");
+                });
+
             modelBuilder.Entity("Core.Entities.Appartament", b =>
                 {
                     b.HasOne("Core.Entities.Building", "Building")

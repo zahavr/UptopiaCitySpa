@@ -45,7 +45,6 @@ export class AddBuildingComponent implements OnInit {
   }
 
   sendRequest(): void {
-    console.log(this.createBusinessForm.value);
     this.buildingService.creatNewBuilding(this.createBusinessForm.value).subscribe((res: IApiResponse) => {
           this.toastrService.success(res.message);
           this.modalService.hide();

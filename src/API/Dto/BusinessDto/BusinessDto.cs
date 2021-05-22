@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace API.Dto.BusinessDto
+namespace API.Dto
 {
 	public class BusinessDto
     {

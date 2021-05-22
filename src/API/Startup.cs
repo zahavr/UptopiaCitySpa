@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace API
 {
@@ -44,6 +45,10 @@ namespace API
                 db.UseSqlServer(_configuration.GetConnectionString("IdentityConnection"));
             });
 
+            services.AddAuthorization(opt => { 
+                opt.AddPolicy("Police", policy => policy.RequireRole("Sheriff", "Officer"));
+            });
+
             services.AddHttpContextAccessor();
             services.AddControllers();
             services.AddPresentation();
@@ -52,7 +57,7 @@ namespace API
             services.AddSignalR();
             services.AddSignalRCore();
             services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
-            services.AddAutoMapper(typeof(UserProfile), typeof(BuildingProfile), typeof(BusinessProfile));
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -46,5 +46,15 @@ export const ApiUrl = {
     AcceptWorker: 'api/business/accept-worker/:vacancyApplicationId',
     GetWorkers: 'api/business/get-workers/:businessId',
     DismissWorker: 'api/business/dismiss-worker/:id',
+  },
+  Police: {
+    GetUsers: 'api/police/get-users',
+    GetUser: 'api/police/get-user/:id',
+    GetUserBusiness: 'api/police/get-user-business/:id',
+    GetUserFriends: 'api/police/get-user-friends/:id',
+    GetUserAppartaments: 'api/police/get-user-appartaments/:id',
+    GetUserViolations: 'api/police/get-user-violations/:id',
+    SetUserViolation: 'api/police/set-violation',
+    AmnestyUser: 'api/police/amnesty-user/:id'
   }
 };

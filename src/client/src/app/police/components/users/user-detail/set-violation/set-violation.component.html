@@ -1,0 +1,16 @@
+<div class="p-2">
+  <form [formGroup]="violationForm" (ngSubmit)="sendViolation()">
+    <app-text-input formControlName="description" [type]="'text'" [label]="'Description'"></app-text-input>
+    <app-text-input formControlName="penalty" [type]="'number'" [label]="'Penalty'"></app-text-input>
+    <select  class="form-control mb-2"  formControlName="typeViolation" id="typeViolation">
+      <option  [defaultSelected]="true" [ngValue]="violationType.Low">{{violationType[violationType.Low]}}</option>
+      <option [ngValue]="violationType.Medium">{{violationType[violationType.Medium]}}</option>
+      <option [ngValue]="violationType.High">{{violationType[violationType.High]}}</option>
+    </select>
+    <app-date-input formControlName="dateExpired" [label]="'Date expired'"></app-date-input>
+    <app-date-input formControlName="setDate" [label]="'Set date'"></app-date-input>
+    <div class="mt-2">
+      <button class="btn btn-success" type="submit">Send</button>
+    </div>
+  </form>
+</div>

@@ -1,4 +1,4 @@
-﻿using API.Dto.BusinessDto;
+﻿using API.Dto;
 using API.Extensions;
 using AutoMapper;
 using Core.Entities;
