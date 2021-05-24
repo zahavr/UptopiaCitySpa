@@ -56,5 +56,11 @@ export const ApiUrl = {
     GetUserViolations: 'api/police/get-user-violations/:id',
     SetUserViolation: 'api/police/set-violation',
     AmnestyUser: 'api/police/amnesty-user/:id'
+  },
+  Work: {
+    GetUserWork: 'api/work/get-user-work',
+    StartShift: 'api/work/start-shift',
+    EndShift: 'api/work/close-shift',
+    CheckOpenShift: 'api/work/check-open-shift'
   }
 };

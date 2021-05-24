@@ -24,20 +24,10 @@ namespace Infrastructure.Data
 		public DbSet<VacancyApplications> VacancyApplications { get; set; }
 		public DbSet<Vacancy> Vacancies { get; set; }
 		public DbSet<Violation> Violations { get; set; }
+		public DbSet<Shift> Shifts { get; set; }
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-
 			modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-			/*			modelBuilder.ApplyConfiguration(new AppartamentConfig());
-						modelBuilder.ApplyConfiguration(new BuildingConfig());
-						modelBuilder.ApplyConfiguration(new UserAppartamentConfig());
-						modelBuilder.ApplyConfiguration(new FriendConfig());
-						modelBuilder.ApplyConfiguration(new BusinessWorkerConfig());
-						modelBuilder.ApplyConfiguration(new BusinessConfig());
-						modelBuilder.ApplyConfiguration(new RejectedApplicationsConfig());
-						modelBuilder.ApplyConfiguration(new VacancyConfig());
-						modelBuilder.ApplyConfiguration(new VacancyApplicationsConfig());
-						modelBuilder.ApplyConfiguration(new ViolationConfig());*/
 		}
 	}
 }
