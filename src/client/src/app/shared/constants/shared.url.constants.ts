@@ -22,7 +22,9 @@ export const ApiUrl = {
     RejectFriendRequest: 'api/user/reject-friend-request/:id',
     DeleteFriend: 'api/user/delete-friend/:id',
     CreateFriendRequest: 'api/user/create-friend-request',
-    GetFriendsRequest: 'api/user/list-request-friends'
+    GetFriendsRequest: 'api/user/list-request-friends',
+    GetUserViolations: 'api/user/get-violations',
+    PayForViolation: 'api/user/pay-for-violation/:id'
   },
   Building: {
     GetAppartaments: 'api/building/get-appartaments',

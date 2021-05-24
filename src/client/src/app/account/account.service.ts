@@ -95,9 +95,9 @@ export class AccountService {
   }
 
   logout(): void {
+    this.router.navigateByUrl('/account/login');
     localStorage.removeItem('token');
     localStorage.removeItem('roles');
-    this.router.navigateByUrl('/account/login');
     this.currentUserSource.next(null);
   }
 
