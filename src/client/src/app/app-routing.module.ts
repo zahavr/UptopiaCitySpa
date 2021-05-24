@@ -43,6 +43,10 @@ const routes: Routes = [
     path: 'police',
     loadChildren: () => import('./police/police.module').then(mod => mod.PoliceModule)
   },
+  {
+    path: 'work',
+    loadChildren: () => import('./work/work.module').then(mod => mod.WorkModule)
+  },
   {path: '**', redirectTo: 'not-found', pathMatch: 'full'}
 ];
 

@@ -11,6 +11,7 @@ namespace API.Extensions
 			services.AddScoped<IUserPresentation, UserPresentation>();
 			services.AddScoped<IBusinessPresentation, BusinessPresentation>();
 			services.AddScoped<IPolicePresentation, PolicePresentation>();
+			services.AddScoped<IWorkPresentation, WorkPresentation>();
 
 			return services;
 		}
