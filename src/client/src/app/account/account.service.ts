@@ -55,6 +55,12 @@ export class AccountService {
     return this.http.get(this.baseUrl + ApiUrl.Account.EmailExists.replace(':email', email));
   }
 
+  isInRole(role: string): boolean {
+    const roles = localStorage.getItem('roles');
+    console.log(JSON.parse(roles).includes(role))
+    return JSON.parse(roles).includes(role);
+  }
+
   getToken(): string {
     let token = '';
     this.currentUser$.subscribe(res => {

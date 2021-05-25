@@ -180,5 +180,14 @@ namespace API.Presentation
 
 			return records;
 		}
+
+		public async Task<bool> MakeOfficer(string userId)
+		{
+			User applicant = await _userManager.FindByIdAsync(userId);
+
+			IdentityResult result = await _userManager.AddToRoleAsync(applicant, "Officer");
+
+			return result.Succeeded;
+		}
 	}
 }
