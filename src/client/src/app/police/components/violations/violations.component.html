@@ -1,19 +1,24 @@
-<div class="d-flex justify-content-center flex-wrap">
- <div class="card col-4 p-2" *ngFor="let violation of violations">
-   <div class="card-body">
-     <h5 class="card-title">Violation was make at {{violation.setDate | date: 'medium'}}</h5>
-     <p class="card-text">Description: {{violation.description}}</p>
-     <p class="card-text">You must pay {{violation.penalty | currency}} or waiting for {{violation.dateExpired | date: 'medium'}}</p>
-     <div class="btn-group">
-       <button class="btn btn-success" (click)="payForViolation(violation)">Pay</button>
-     </div>
-   </div>
- </div>
-</div>
-<div class="d-flex justify-content-center">
-  <app-pagination
-    [pageSize]="violationParams.pageSize"
-    [totalCount]="totalCount"
-    (pageChanged)="onPageChanged($event)">>
-  </app-pagination>
-</div>
+<h1 *ngIf="violations.length === 0" class="text-center">You`re good citizen</h1>
+
+<ng-container *ngIf="violations.length > 0">
+  <div class="d-flex justify-content-center flex-wrap">
+    <div class="card col-4 p-2" *ngFor="let violation of violations">
+      <div class="card-body">
+        <h5 class="card-title">Violation was make at {{violation.setDate | date: 'medium'}}</h5>
+        <p class="card-text">Description: {{violation.description}}</p>
+        <p class="card-text">You must pay {{violation.penalty | currency}} or waiting for {{violation.dateExpired | date: 'medium'}}</p>
+        <div class="btn-group">
+          <button class="btn btn-success" (click)="payForViolation(violation)">Pay</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center">
+    <app-pagination
+      [pageSize]="violationParams.pageSize"
+      [totalCount]="totalCount"
+      (pageChanged)="onPageChanged($event)">>
+    </app-pagination>
+  </div>
+
+</ng-container>

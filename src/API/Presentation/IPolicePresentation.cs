@@ -16,5 +16,6 @@ namespace API.Presentation
 		Task<bool> SetViolation(ViolationDto violationDto, ClaimsPrincipal user);
 		Task<TableData<ViolationViewDto>> GetUserViolations(TablePoliceParams tableParams, string userId);
 		Task<bool> AmnestyUser(int amnestyId);
+		Task<bool> MakeOfficer(string userId);
 	}
 }

@@ -16,7 +16,6 @@ export class HasRoleDirective implements OnInit{
 
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
       this.user = user;
-      console.log(user);
     });
   }
 

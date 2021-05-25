@@ -8,10 +8,8 @@ import {IFullUserProfile} from '../shared/interfaces/full-profile-user.interface
 import {IBusiness} from '../shared/interfaces/business.interface';
 import {IPoliceAppartament} from '../shared/interfaces/building.interface';
 import {DefaultParams} from '../shared/params/defaultParams';
-import {IPagination} from '../shared/interfaces/pagination.interface';
 import {IFriend} from '../shared/interfaces/friend.interface';
 import {PoliceParams} from '../shared/params/policeParams';
-import {IViolation} from '../shared/interfaces/violation.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -74,6 +72,13 @@ export class PoliceService {
 
   amnestyUser(amnestyId: number): Observable<boolean>{
     return this.http.delete(this.baseUrl + ApiUrl.Police.AmnestyUser.replace(':id', amnestyId.toString()), {})
+      .pipe(
+        map((res: boolean) => res)
+      );
+  }
+
+  makeOfficer(userId: string): Observable<boolean> {
+    return this.http.get(this.baseUrl + ApiUrl.Police.MakeOfficer.replace(':id', userId))
       .pipe(
         map((res: boolean) => res)
       );
