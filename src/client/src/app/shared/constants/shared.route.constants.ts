@@ -21,7 +21,8 @@ export const AppRoute = {
   },
   Police: {
     Users: 'users',
-    UserDetail: ':id'
+    UserDetail: 'users/:id',
+    UserViolation: 'user-violation'
   },
   Work: {
     UserWork: 'user-work'

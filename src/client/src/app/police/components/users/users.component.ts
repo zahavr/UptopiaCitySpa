@@ -30,7 +30,7 @@ export class UsersComponent implements OnInit {
   }
 
   viewUser(): void {
-    this.router.navigateByUrl(`police/${this.selectedUser.id}`);
+    this.router.navigateByUrl(`police/users/${this.selectedUser.id}`);
   }
 
   uploadUsers(event: any): void {

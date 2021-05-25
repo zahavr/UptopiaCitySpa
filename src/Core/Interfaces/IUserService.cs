@@ -1,4 +1,5 @@
-﻿using Core.Entities.Identity;
+﻿using Core.Entities;
+using Core.Entities.Identity;
 using Core.Entities.User;
 using System.Threading.Tasks;
 
@@ -11,5 +12,6 @@ namespace Core.Interfaces
 		Task<bool> AcceptFriend(int id);
 		Task<bool> RejectFriend(int id);
 		Task<bool> DeleteFriendAsync(Friend friend);
+		Task<ResultWithMessage> PayViolation(User user, Violation violation);
 	}
 }

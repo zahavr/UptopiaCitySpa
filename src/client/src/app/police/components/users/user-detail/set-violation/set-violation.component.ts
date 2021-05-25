@@ -29,7 +29,6 @@ export class SetViolationComponent implements OnInit {
       typeViolation: new FormControl(this.violationType.Low, Validators.required),
       penalty: new FormControl('', Validators.required),
       dateExpired: new FormControl('', Validators.required),
-      setDate: new FormControl('', Validators.required),
       citizenId: new FormControl(this.userId, Validators.required)
     });
   }
