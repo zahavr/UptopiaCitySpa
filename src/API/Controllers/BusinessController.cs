@@ -69,7 +69,7 @@ namespace API.Controllers
 		}
 
 		[Authorize(Roles = "BusinessOwner")]
-		[HttpPost("create-vacansy")]
+		[HttpPost("create-vacancy")]
 		public async Task<ActionResult<bool>> CreateVacancy(BusinessVacancyDto businessVacancyDto)
 		{
 			return await _businessPresentation.CreateVacancy(businessVacancyDto);
@@ -108,6 +108,13 @@ namespace API.Controllers
 		public async Task<ActionResult<bool>> AcceptWorker(int vacancyApplicationId)
 		{
 			return await _businessPresentation.AcceptWorker(vacancyApplicationId);
+		}
+
+		[Authorize(Roles = "BusinessOwner")]
+		[HttpDelete("reject-worker/{vacancyApplicationId}")]
+		public async Task<ActionResult<bool>> RejectWorker(int vacancyApplicationId)
+		{
+			return await _businessPresentation.RejectVacancyRespond(vacancyApplicationId);
 		}
 
 		[Authorize(Roles = "BusinessOwner")]

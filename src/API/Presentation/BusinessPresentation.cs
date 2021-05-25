@@ -44,6 +44,10 @@ namespace API.Presentation
 			_businessWorkerRepository = businessWorkerRepository;
 		}
 
+		public BusinessPresentation()
+		{
+		}
+
 		public async Task<ActionResult<ApiResponse>> AcceptBusinessRequest(int businessId)
 		{
 			Business business = await _businessRepository.GetByIdAsync(businessId);
@@ -257,6 +261,13 @@ namespace API.Presentation
 																	  .FirstOrDefaultAsync(va => va.Id == vacancyApplicationId);
 
 			return await _businessService.AcceptWorker(vacancy);
+		}
+
+		public async Task<bool> RejectVacancyRespond(int id)
+		{
+			VacancyApplications vacancy = await _vacanciesApplications.GetByIdAsync(id);
+
+			return await _businessService.RejectVacancyRespond(vacancy);
 		}
 
 		public async Task<ActionResult<bool>> DismissWoker(int id)

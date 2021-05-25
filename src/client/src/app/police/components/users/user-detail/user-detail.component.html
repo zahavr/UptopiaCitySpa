@@ -89,8 +89,6 @@
             <ng-container *ngIf="businessOpen">
               <div class="card h-100">
                 <p-table [value]="userBusiness"
-                         [(contextMenuSelection)]="selectedBusiness"
-                         [contextMenu]="contextMenu"
                          selectionMode="single">
                   <ng-template pTemplate="header">
                     <tr style="font-size: 10px">
@@ -120,7 +118,7 @@
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
                       *ngFor="let userAppartament of userAppartaments">
-                    {{userAppartament.title}}
+                    <strong>Appartament name:</strong> {{userAppartament.title}}
                   </li>
                 </ul>
               </div>

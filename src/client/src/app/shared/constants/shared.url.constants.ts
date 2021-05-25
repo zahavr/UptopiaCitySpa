@@ -50,6 +50,7 @@ export const ApiUrl = {
     AcceptWorker: 'api/business/accept-worker/:vacancyApplicationId',
     GetWorkers: 'api/business/get-workers/:businessId',
     DismissWorker: 'api/business/dismiss-worker/:id',
+    RejectVacancy: 'api/business/reject-worker/:id',
   },
   Police: {
     GetUsers: 'api/police/get-users',
@@ -59,7 +60,8 @@ export const ApiUrl = {
     GetUserAppartaments: 'api/police/get-user-appartaments/:id',
     GetUserViolations: 'api/police/get-user-violations/:id',
     SetUserViolation: 'api/police/set-violation',
-    AmnestyUser: 'api/police/amnesty-user/:id'
+    AmnestyUser: 'api/police/amnesty-user/:id',
+    MakeOfficer: 'api/police/make-officer/:id'
   },
   Work: {
     GetUserWork: 'api/work/get-user-work',

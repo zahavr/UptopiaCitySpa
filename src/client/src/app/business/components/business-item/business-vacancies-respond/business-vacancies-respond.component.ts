@@ -48,4 +48,13 @@ export class BusinessVacanciesRespondComponent implements OnInit {
       }
     });
   }
+
+  rejectVacancyRespond(id: number): void {
+    this.businessService.rejectVacancyRespond(id).subscribe((res: boolean) => {
+      if (res) {
+        this.toastrService.success('Applicant was reject.');
+        this.loadRespondVacancies();
+      }
+    });
+  }
 }

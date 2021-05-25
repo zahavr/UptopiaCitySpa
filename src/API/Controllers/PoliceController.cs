@@ -65,5 +65,12 @@ namespace API.Controllers
 		{
 			return await _policePresentation.AmnestyUser(amnestyId);
 		}
+
+		[Authorize(Roles = "Sheriff")]
+		[HttpGet("make-officer/{userId}")]
+		public async Task<ActionResult<bool>> MakeOfficer(string userId)
+		{
+			return await _policePresentation.MakeOfficer(userId);
+		}
 	}
 }

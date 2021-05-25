@@ -14,5 +14,6 @@ namespace Core.Interfaces
 		Task<bool> RespondVacancy(VacancyApplications vacancyApplications);
 		Task<bool> AcceptWorker(VacancyApplications vacancy);
 		Task<bool> DismissWorker(BusinessWorker businessWorker);
+		Task<bool> RejectVacancyRespond(VacancyApplications application);
 	}
 }

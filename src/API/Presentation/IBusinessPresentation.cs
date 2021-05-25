@@ -23,6 +23,7 @@ namespace API.Presentation
 		Task<TableData<UserRespondVacancyDto>> GetUserRespondVacancies(TableParams tableParams, ClaimsPrincipal user);
 		Task<TableData<WorkerDto>> GetBusinessWorkers(TableParams tableParams, int businessId);
 		Task<bool> AcceptWorker(int vacancyApplicationId);
+		Task<bool> RejectVacancyRespond(int id);
 		Task<ActionResult<bool>> DismissWoker(int id);
 	}
 }

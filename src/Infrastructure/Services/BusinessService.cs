@@ -101,5 +101,13 @@ namespace Infrastructure.Services
 
 			return await _unitOfWork.Complete();
 		}
+
+
+		public async Task<bool> RejectVacancyRespond(VacancyApplications application)
+		{
+			_unitOfWork.Repository<VacancyApplications>().Delete(application);
+
+			return await _unitOfWork.Complete();
+		}
 	}
 }

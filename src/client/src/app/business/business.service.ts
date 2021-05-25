@@ -20,7 +20,8 @@ export class BusinessService {
   }
 
   getUserBusiness(paginationParams: DefaultParams): Observable<IPagination> {
-    return this.http.get<IPagination>(this.baseUrl + ApiUrl.Business.GetUserBusiness, {observe: 'response', params: this.setParams(paginationParams)})
+    return this.http.get<IPagination>(this.baseUrl + ApiUrl.Business.GetUserBusiness,
+      {observe: 'response', params: this.setParams(paginationParams)})
       .pipe(
         map((res: HttpResponse<any>) => res.body)
       );
@@ -96,6 +97,19 @@ export class BusinessService {
       );
   }
 
+  createBusinessRequest(values: any): Observable<IApiResponse> {
+    return this.http.post(this.baseUrl + ApiUrl.Business.CreateBusinessRequest, values).pipe(
+      map((res: IApiResponse) => res)
+    );
+  }
+
+  rejectVacancyRespond(vacancyId: number): Observable<boolean> {
+    return this.http.delete(this.baseUrl + ApiUrl.Business.RejectVacancy.replace(':id', vacancyId.toString()))
+      .pipe(
+        map((res: boolean) => res)
+      );
+  }
+
   private setParams(paginationParams: DefaultParams): HttpParams {
     let params = new HttpParams();
 
@@ -112,11 +126,5 @@ export class BusinessService {
     params = params.append('tableSkip', tableParams.tableSkip.toString());
 
     return params;
-  }
-
-  createBusinessRequest(values: any): Observable<IApiResponse> {
-    return this.http.post(this.baseUrl + ApiUrl.Business.CreateBusinessRequest, values).pipe(
-      map((res: IApiResponse) => res)
-    );
   }
 }
