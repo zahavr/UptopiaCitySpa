@@ -34,6 +34,8 @@
           </div>
         </div>
         <a class="p-2" routerLink="/buildings/main" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Buildings</a>
+        <a class="p-2" routerLink="/buildings/appartaments" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">My appartaments</a>
+
         <div *appHasRole="['BusinessOwner']" class="dropdown p-2" dropdown>
           <a class="dropdown-toggle" style="cursor: pointer;" dropdownToggle>Business</a>
           <div  class="dropdown-menu dropdown-menu-right" style="cursor: pointer" *dropdownMenu>

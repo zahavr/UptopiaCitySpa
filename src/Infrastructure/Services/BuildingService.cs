@@ -34,6 +34,7 @@ namespace Infrastructure.Services
 		public async Task<ResultWithMessage> BuyAppartamentsAsync(User user, int appartamentId)
 		{
 			ResultWithMessage result = new ResultWithMessage(false);
+
 			IGenericRepository<Appartament> appartamentRepo = _unitOfWork.Repository<Appartament>();
 
 			AppartamentWithUsersSpecification appartamentSpec = new AppartamentWithUsersSpecification(appartamentId);
@@ -67,9 +68,22 @@ namespace Infrastructure.Services
 				return result;
 			}
 
+			result.IsSuccess = true;
 			result.Message = "Congratulations! You bought new appartament";
 
 			return result;
+		}
+
+		public async Task<bool> SellAppartament(User user, UserAppartament appartament)
+		{
+			if (!await _userService.RecalculateMoney(user, appartament.Appartament.Cost))
+			{
+				return false;
+			};
+
+			_unitOfWork.Repository<UserAppartament>().Delete(appartament);
+
+			return await _unitOfWork.Complete();
 		}
 	}
 }

@@ -8,5 +8,6 @@ namespace Core.Interfaces
     {
         Task<bool> AddBuildingAsync(Building building);
 		Task<ResultWithMessage> BuyAppartamentsAsync(User user, int appartamentId);
+		Task<bool> SellAppartament(User user, UserAppartament appartament);
 	}
 }

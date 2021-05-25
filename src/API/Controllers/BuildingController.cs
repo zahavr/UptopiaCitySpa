@@ -4,6 +4,7 @@ using API.Extensions;
 using API.Helpers;
 using API.Presentation;
 using Core.Entities.Identity;
+using Core.Specification;
 using Core.Specification.BuildingSpecification;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -67,5 +68,20 @@ namespace API.Controllers
 		{
 			return Ok(await _buildingPresentation.GetRandomAppartament());
 		}
+
+		[Authorize]
+		[HttpGet("get-user-appartaments")]
+		public async Task<ActionResult<Pagination<AppartamentViewDto>>> GetUserAppartaments([FromQuery] BaseSpecParams baseSpec) 
+		{ 
+			return await _buildingPresentation.GetUserAppartament(baseSpec, User);
+		}
+
+		[Authorize]
+		[HttpDelete("sell-appartaments/{id}")]
+		public async Task<ActionResult<bool>> SellAppartament(int id)
+		{ 
+			return await _buildingPresentation.SellAppartament(id, User);
+		}
+
 	}
 }

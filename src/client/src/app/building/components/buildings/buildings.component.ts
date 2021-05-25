@@ -44,6 +44,6 @@ export class BuildingsComponent implements OnInit {
     this.modalService.show(AddBuildingComponent, {
       class: 'modal-lg',
       backdrop: true,
-    })
+    });
   }
 }
