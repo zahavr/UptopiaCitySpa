@@ -47,7 +47,7 @@ export class ViolationsComponent implements OnInit {
         this.toastrService.success(res.message);
         this.violations = this.violations.filter(v => v.id !== violation.id);
         let user: IUser;
-        this.accountService.currentUser$.subscribe((res: IUser) => {
+        this.accountService.currentUser$.subscribe((res) => {
           user = res;
           user.money -= violation.penalty;
         }).unsubscribe();

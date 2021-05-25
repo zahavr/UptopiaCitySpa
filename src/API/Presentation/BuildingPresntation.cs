@@ -1,30 +1,41 @@
 ﻿using API.Dto.BuildingDto;
 using API.Errors;
+using API.Extensions;
 using API.Helpers;
 using AutoMapper;
 using Core;
 using Core.Entities;
 using Core.Entities.Identity;
 using Core.Interfaces;
+using Core.Specification;
 using Core.Specification.BuildingSpecification;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace API.Presentation
 {
 	public class BuildingPresntation : IBuildingPresentation
 	{
+		private readonly UserManager<User> _userManager;
 		private readonly IGenericRepository<Appartament> _appartamentRepo;
+		private readonly IGenericRepository<UserAppartament> _userAppartamentRepo;
 		private readonly IBuildingService _buildingService;
 		private readonly IMapper _mapper;
 
 		public BuildingPresntation(
+			UserManager<User> userManager,
 			IGenericRepository<Appartament> appartamentRepo,
+			IGenericRepository<UserAppartament> userAppartamentRepo,
 			IBuildingService buildingService,
 			IMapper mapper)
 		{
+			_userManager = userManager;
 			_appartamentRepo = appartamentRepo;
+			_userAppartamentRepo = userAppartamentRepo;
 			_buildingService = buildingService;
 			_mapper = mapper;
 		}
@@ -48,7 +59,7 @@ namespace API.Presentation
 			if (result.IsSuccess)
 			{
 				return new OkObjectResult(new ApiResponse(200, result.Message));
-			} 
+			}
 
 			return new BadRequestObjectResult(new ApiResponse(400, result.Message));
 		}
@@ -83,6 +94,32 @@ namespace API.Presentation
 			IReadOnlyList<Appartament> appartaments = await _appartamentRepo.ListAsync(appartamentsSpecification);
 
 			return _mapper.Map<IReadOnlyList<Appartament>, IReadOnlyList<AppartamentViewDto>>(appartaments);
+		}
+
+		public async Task<Pagination<AppartamentViewDto>> GetUserAppartament(BaseSpecParams baseSpec, ClaimsPrincipal claims)
+		{
+			User user = await _userManager.FindByEmailFromClaimsPrincipals(claims);
+
+			CountUserAppartamentSpecification countSpec = new CountUserAppartamentSpecification(user.Id);
+			UserAppartamentSpecification spec = new UserAppartamentSpecification(baseSpec, user.Id);
+
+			int totalCount = await _userAppartamentRepo.CountAsync(countSpec);
+
+			IReadOnlyList<UserAppartament> appartaments = await _userAppartamentRepo.ListAsync(spec);
+			IReadOnlyList<AppartamentViewDto> result = _mapper.Map<IReadOnlyList<UserAppartament>, IReadOnlyList<AppartamentViewDto>>(appartaments);
+
+			return new Pagination<AppartamentViewDto>(baseSpec.PageIndex, baseSpec.PageSize, totalCount, result);
+		}
+
+		public async Task<bool> SellAppartament(int id, ClaimsPrincipal claims)
+		{
+			User user = await _userManager.FindByEmailFromClaimsPrincipals(claims);
+
+			UserAppartament appartament = await _userAppartamentRepo.GetAll()
+																	.Include(x => x.Appartament)
+																	.FirstOrDefaultAsync(x => x.AppartamentId == id);
+
+			return await _buildingService.SellAppartament(user, appartament);
 		}
 	}
 }

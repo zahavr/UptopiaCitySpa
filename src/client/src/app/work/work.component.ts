@@ -42,6 +42,7 @@ export class WorkComponent implements OnInit {
     this.workService.closeShift().subscribe((res: IApiResponse) => {
       if (res.statusCode === 200) {
         this.toastrService.success(res.message);
+        this.shiftIsOpen = false;
       }
     });
   }
