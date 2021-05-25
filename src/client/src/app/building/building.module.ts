@@ -7,6 +7,7 @@ import { BuildingItemComponent } from './components/building-item/building-item.
 import { BuildingDetailComponent } from './components/building-detail/building-detail.component';
 import {SharedModule} from '../shared/shared.module';
 import { AddBuildingComponent } from './components/add-building/add-building.component';
+import { UserAppartamentsComponent } from './user-appartaments/user-appartaments.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { AddBuildingComponent } from './components/add-building/add-building.com
     BuildingItemComponent,
     BuildingDetailComponent,
     AddBuildingComponent,
+    UserAppartamentsComponent,
   ],
   imports: [
     CommonModule,

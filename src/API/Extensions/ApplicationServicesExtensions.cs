@@ -15,6 +15,8 @@ namespace API.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IBuildingService, BuildingService>();
             services.AddScoped<IBusinessService, BusinessService>();
+            services.AddScoped<IPoliceService, PoliceService>();
+            services.AddScoped<IWorkService, WorkService>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

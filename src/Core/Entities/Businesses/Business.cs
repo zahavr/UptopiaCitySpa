@@ -10,7 +10,7 @@ namespace Core.Entities
 		public string OwnerId { get; set; }
 		public string Address { get; set; }
 		public int MaxCountOfWorker { get; set; }
-		public BusinessStatus BusinessStatus { get; set; }
+		public BusinessStatus BusinessStatus { get; set; } = BusinessStatus.Confirmed;
 		public DateTime DateConfirmation { get; set; }
 
 		public virtual ICollection<BusinessWorker> BusinessWorkers { get; set; }

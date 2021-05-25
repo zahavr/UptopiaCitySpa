@@ -5,11 +5,12 @@ export const AppRoute = {
   },
   PersonalCabinet: {
     Main: 'main',
-    Friend: 'list',
+    Friend: 'list'
   },
   Building: {
     Main: 'main',
-    Detail: ':id'
+    Detail: 'main/:id',
+    OwnAppartaments: 'appartaments'
   },
   CityManagment: {
     BusinessApplications: 'business-applications'
@@ -18,5 +19,13 @@ export const AppRoute = {
     Main: 'main',
     RequestList: 'requests-list',
     VacancyList: 'vacancy-list'
+  },
+  Police: {
+    Users: 'users',
+    UserDetail: 'users/:id',
+    UserViolation: 'user-violation'
+  },
+  Work: {
+    UserWork: 'user-work'
   }
 };

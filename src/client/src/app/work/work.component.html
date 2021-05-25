@@ -1,0 +1,14 @@
+<div class="d-flex justify-content-center">
+  <div class="card">
+    <div class="card-header">
+      You work as {{work?.positionAtWork}} in {{work?.companyName}}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">You salary is {{work?.salary}}</h5>
+      <p class="card-text">You work here from {{work?.startWork | date: 'short'}} </p>
+      <p class="card-text">Your work here {{work?.workExperience}} days </p>
+      <button *ngIf="!shiftIsOpen" class="btn btn-primary" (click)="startShift()">Start shift</button>
+      <button *ngIf="shiftIsOpen" class="btn btn-primary" (click)="closeShift()">Close shift</button>
+    </div>
+  </div>
+</div>

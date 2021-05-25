@@ -1,4 +1,4 @@
-﻿using API.Dto.BusinessDto;
+﻿using API.Dto;
 using API.Errors;
 using API.Helpers;
 using Core.Specification;

@@ -1,0 +1,32 @@
+<p-table
+  [value]="violations"
+  [lazy]="true"
+  [paginator]="true"
+  [rows]="8"
+  [totalRecords]="totalCount"
+  [loading]="loading"
+  (onLazyLoad)="loadViolations($event)"
+  selectionMode="single"
+  #userTable
+>
+  <ng-template pTemplate="header">
+    <tr style="font-size: 10px">
+      <th class="text-center text-uppercase">Description</th>
+      <th class="text-center text-uppercase">Penalty</th>
+      <th class="text-center text-uppercase">Type Violation</th>
+      <th class="text-center text-uppercase">Date Expired</th>
+      <th class="text-center text-uppercase">Set Date</th>
+      <th class="text-center text-uppercase">Action</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-violation>
+    <tr style="font-size: 12px;">
+      <td class="text-center text-break">{{violation.description}}</td>
+      <td class="text-center">{{violation.penalty}}</td>
+      <td class="text-center">{{violation[violation.typeViolation]}}</td>
+      <td class="text-center">{{violation.dateExpired | date: 'short'}}</td>
+      <td class="text-center">{{violation.setDate | date: 'short'}}</td>
+      <td class="text-center"><button class="btn btn-danger" (click)="amnestyUser(violation.id)"><i class="fa fa-balance-scale"></i></button></td>
+    </tr>
+  </ng-template>
+</p-table>

@@ -6,6 +6,7 @@ using API.Presentation;
 using AutoMapper;
 using Core.Entities.Identity;
 using Core.Interfaces;
+using Core.Specification;
 using Core.Specification.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -96,14 +97,12 @@ namespace API.Controllers
 		[HttpPost("create-friend-request")]
 		public async Task<ActionResult> CreateFriendRequest(UserFriendViewDto friendDto)
 		{
-			User user = await _userManager.FindByEmailFromClaimsPrincipals(HttpContext.User);
-
 			if (friendDto == null)
 			{
 				return BadRequest(new ApiResponse(400, "Cannot send null"));
 			}
 
-			if (await _userPresentation.PrependFriendRequest(user, friendDto))
+			if (await _userPresentation.PrependFriendRequest(User, friendDto))
 			{
 				return Ok();
 			}
@@ -159,6 +158,20 @@ namespace API.Controllers
 			}
 
 			return BadRequest(new ApiResponse(400, "Cannot delete this friend"));
+		}
+
+		[Authorize]
+		[HttpGet("get-violations")]
+		public async Task<ActionResult<Pagination<ViolationViewDto>>> GetUserViolations([FromQuery] BaseSpecParams tableParams)
+		{
+			return await _userPresentation.GetUserViolations(tableParams, User);
+		}
+
+		[Authorize]
+		[HttpDelete("pay-for-violation/{violationId}")]
+		public async Task<ActionResult<ApiResponse>> PayForViolation(int violationId)
+		{
+			return await _userPresentation.PayForViolation(violationId, User);
 		}
 	}
 }

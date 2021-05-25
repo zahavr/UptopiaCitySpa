@@ -22,14 +22,18 @@ export const ApiUrl = {
     RejectFriendRequest: 'api/user/reject-friend-request/:id',
     DeleteFriend: 'api/user/delete-friend/:id',
     CreateFriendRequest: 'api/user/create-friend-request',
-    GetFriendsRequest: 'api/user/list-request-friends'
+    GetFriendsRequest: 'api/user/list-request-friends',
+    GetUserViolations: 'api/user/get-violations',
+    PayForViolation: 'api/user/pay-for-violation/:id'
   },
   Building: {
     GetAppartaments: 'api/building/get-appartaments',
     GetAppartament: 'api/building/get-appartament/:id',
     GetRandomAppartaments: 'api/building/get-random-appartaments',
     BuyAppartament: 'api/building/buy-appartaments/:id',
-    CreateNewBuilding: 'api/building/add-building'
+    CreateNewBuilding: 'api/building/add-building',
+    GetUserAppartaments: 'api/building/get-user-appartaments',
+    SellAppartament: 'api/building/sell-appartaments/:id'
   },
   Business: {
     GetBusinessApplications: 'api/business/get-business-requests',
@@ -46,5 +50,21 @@ export const ApiUrl = {
     AcceptWorker: 'api/business/accept-worker/:vacancyApplicationId',
     GetWorkers: 'api/business/get-workers/:businessId',
     DismissWorker: 'api/business/dismiss-worker/:id',
+  },
+  Police: {
+    GetUsers: 'api/police/get-users',
+    GetUser: 'api/police/get-user/:id',
+    GetUserBusiness: 'api/police/get-user-business/:id',
+    GetUserFriends: 'api/police/get-user-friends/:id',
+    GetUserAppartaments: 'api/police/get-user-appartaments/:id',
+    GetUserViolations: 'api/police/get-user-violations/:id',
+    SetUserViolation: 'api/police/set-violation',
+    AmnestyUser: 'api/police/amnesty-user/:id'
+  },
+  Work: {
+    GetUserWork: 'api/work/get-user-work',
+    StartShift: 'api/work/start-shift',
+    EndShift: 'api/work/close-shift',
+    CheckOpenShift: 'api/work/check-open-shift'
   }
 };

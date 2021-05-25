@@ -1,4 +1,5 @@
 export interface IUserProfile {
+  id: string;
   firstName: string;
   lastName: string;
   age: number;

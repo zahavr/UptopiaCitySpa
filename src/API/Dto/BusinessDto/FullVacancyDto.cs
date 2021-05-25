@@ -1,4 +1,4 @@
-﻿namespace API.Dto.BusinessDto
+﻿namespace API.Dto
 {
     public class FullVacancyDto
     {

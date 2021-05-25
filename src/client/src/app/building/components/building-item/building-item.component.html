@@ -1,4 +1,4 @@
-<div class="card mb-3 m-3" style="max-width: 18rem;">
+<div class="card mb-3 m-3" style="max-width: 18rem; min-height: 20vh">
   <div class="card-header d-flex justify-content-between">
     <p>
       {{appartament.title}}
@@ -12,9 +12,13 @@
     <h5 class="card-title">Price: {{appartament.cost | currency}}</h5>
     <p class="card-text" style="font-size: 0.9em">{{appartament.description}}</p>
     <div class="btn-group w-100">
-      <button class="btn btn-success" (click)="buyAppartament(appartament.id)"><i class="fa fa-shopping-cart mr-1"></i>Buy</button>
-      <button class="btn btn-secondary" routerLink="/buildings/{{appartament.id}}"
-              replaceUrl="/buildings/{{appartament.id}}"><i class="fa fa-info-circle mr-1"></i> Detail
+      <div *ngIf="!isSale">
+        <button class="btn btn-success" (click)="buyAppartament(appartament.id)"><i class="fa fa-shopping-cart mr-1"></i>Buy</button>
+        <button class="btn btn-secondary" routerLink="/buildings/{{appartament.id}}"
+                replaceUrl="/buildings/{{appartament.id}}"><i class="fa fa-info-circle mr-1"></i> Detail
+        </button>
+      </div>
+      <button *ngIf="isSale" class="btn btn-danger" (click)="sellAppartament()"><i class="fa fa-shopping-cart mr-1"></i> Sell
       </button>
     </div>
   </div>

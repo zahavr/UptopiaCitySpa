@@ -189,6 +189,33 @@ namespace Infrastructure.Data.Migrations
                     b.ToView("RejectedApplications", "Business");
                 });
 
+            modelBuilder.Entity("Core.Entities.Shift", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal?>("EarnedMoney")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("EndShift")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartShift")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Shifts", "Work");
+
+                    b.ToView("Shifts", "Work");
+                });
+
             modelBuilder.Entity("Core.Entities.User.Friend", b =>
                 {
                     b.Property<int>("Id")
@@ -318,6 +345,45 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("VacancyApplications", "Business");
 
                     b.ToView("VacancyApplications", "Business");
+                });
+
+            modelBuilder.Entity("Core.Entities.Violation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CitizenId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateExpired")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<decimal>("Penalty")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("PolicemanId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("SetDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TypeViolation")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Violations", "Police");
+
+                    b.ToView("Violations", "Police");
                 });
 
             modelBuilder.Entity("Core.Entities.Appartament", b =>

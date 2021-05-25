@@ -4,6 +4,7 @@ import {AppRoute} from '../shared/constants/shared.route.constants';
 import {BuildingsComponent} from './components/buildings/buildings.component';
 import {AuthGuard} from '../core/guards/auth.guard';
 import {BuildingDetailComponent} from './components/building-detail/building-detail.component';
+import {UserAppartamentsComponent} from './user-appartaments/user-appartaments.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,11 @@ const routes: Routes = [
   {
     path: AppRoute.Building.Detail,
     component: BuildingDetailComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: AppRoute.Building.OwnAppartaments,
+    component: UserAppartamentsComponent,
     canActivate: [AuthGuard]
   }
 ];

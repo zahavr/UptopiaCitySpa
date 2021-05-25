@@ -1,4 +1,6 @@
-﻿using Core.Entities.Identity;
+﻿using Core;
+using Core.Entities;
+using Core.Entities.Identity;
 using Core.Entities.User;
 using Core.Interfaces;
 using Core.Specification.User;
@@ -54,6 +56,38 @@ namespace Infrastructure.Services
 			repository.Delete(friend);
 
 			return await _unitOfWork.Complete();
+		}
+
+		public async Task<ResultWithMessage> PayViolation(User user, Violation violation)
+		{
+			ResultWithMessage result = new ResultWithMessage(false);
+
+			if (user.Money < violation.Penalty)
+			{
+				result.Message = "You`ve less money than you penalty";
+				return result;
+			}
+
+			user.Money -= violation.Penalty;
+
+			IdentityResult isUpdateUser = await _userManager.UpdateAsync(user);
+
+			if (!isUpdateUser.Succeeded)
+			{
+				result.Message = "Cannot update budget";
+				return result;
+			}
+
+			_unitOfWork.Repository<Violation>().Delete(violation);
+
+			if (!await _unitOfWork.Complete())
+			{
+				result.Message = "Cannot delete violation";
+				return result;
+			}
+			result.IsSuccess = true;
+			result.Message = "Violation was deleted";
+			return result;
 		}
 
 		public async Task<bool> RecalculateMoney(User user, decimal money)

@@ -1,11 +1,18 @@
 ﻿using API.Dto;
+using API.Errors;
+using API.Extensions;
 using API.Helpers;
 using AutoMapper;
+using Core;
+using Core.Entities;
 using Core.Entities.Identity;
 using Core.Entities.User;
 using Core.Interfaces;
+using Core.Specification;
 using Core.Specification.User;
+using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace API.Presentation
@@ -14,17 +21,23 @@ namespace API.Presentation
 	{
 		private readonly IMapper _mapper;
 		private readonly IUserService _userService;
+		private readonly UserManager<User> _userManager;
 		private readonly IGenericRepository<Friend> _friendRepository;
+		private readonly IGenericRepository<Violation> _violationRepository;
 
 		public UserPresentation(
 			IMapper mapper,
 			IUserService userService,
-			IGenericRepository<Friend> friendRepository
+			UserManager<User> userManager,
+			IGenericRepository<Friend> friendRepository,
+			IGenericRepository<Violation> violationRepository
 			)
 		{
 			_mapper = mapper;
 			_userService = userService;
+			_userManager = userManager;
 			_friendRepository = friendRepository;
+			_violationRepository = violationRepository;
 		}
 
 		public async Task<bool> AcceptFriend(int id)
@@ -50,14 +63,16 @@ namespace API.Presentation
 			return new Pagination<UserFriendViewDto>(specParams.PageIndex, specParams.PageSize, count, resultData);
 		}
 
-		public Task<bool> PrependFriendRequest(User sender, UserFriendViewDto friendDto)
+		public async Task<bool> PrependFriendRequest(ClaimsPrincipal sender, UserFriendViewDto friendDto)
 		{
-			Friend userFriend = _mapper.Map<User, Friend>(sender);
+			User user = await _userManager.FindByEmailFromClaimsPrincipals(sender);
+
+			Friend userFriend = _mapper.Map<User, Friend>(user);
 
 			userFriend = _mapper.Map<UserFriendViewDto, Friend>(friendDto, userFriend);
 			userFriend.FriendStatus = FriendStatus.Pending;
 
-			return _userService.CreateFriendRequest(userFriend);
+			return await _userService.CreateFriendRequest(userFriend);
 		}
 
 		public async Task<Pagination<UserFriendViewDto>> GetFriendList(UserFriendSpecParams specParams)
@@ -78,6 +93,36 @@ namespace API.Presentation
 			Friend friend = await _friendRepository.GetByIdAsync(id);
 
 			return await _userService.DeleteFriendAsync(friend);
+		}
+
+		public async Task<Pagination<ViolationViewDto>> GetUserViolations(BaseSpecParams tableParams, ClaimsPrincipal claims)
+		{
+			User user = await _userManager.FindByEmailFromClaimsPrincipals(claims);
+
+			CountSpecialUserViolationSpecification countSpec = new CountSpecialUserViolationSpecification(user.Id);
+			SpecialUserViolationSpecification spec = new SpecialUserViolationSpecification(tableParams, user.Id);
+
+			int totalCount = await _violationRepository.CountAsync(countSpec);
+			IReadOnlyList<Violation> data = await _violationRepository.ListAsync(spec);
+
+			List<ViolationViewDto> result = _mapper.Map<IReadOnlyCollection<Violation>, List<ViolationViewDto>>(data);
+
+			return new Pagination<ViolationViewDto>(tableParams.PageIndex, tableParams.PageSize, totalCount, result);
+		}
+
+		public async Task<ApiResponse> PayForViolation(int violationId, ClaimsPrincipal claims)
+		{
+			User user = await _userManager.FindByEmailFromClaimsPrincipals(claims);
+			Violation violation = await _violationRepository.GetByIdAsync(violationId);
+
+			ResultWithMessage result = await _userService.PayViolation(user, violation);
+
+			if (!result.IsSuccess)
+			{
+				return new ApiResponse(400, result.Message);
+			}
+
+			return new ApiResponse(200, result.Message);
 		}
 	}
 }

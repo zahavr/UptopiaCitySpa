@@ -51,4 +51,21 @@ export class BuildingService {
       map((res: IApiResponse) => res)
     );
   }
+
+  getOwnUserAppartaments(defaultParams: DefaultParams): Observable<IPagination> {
+    let params: HttpParams = new HttpParams();
+
+    params = params.append('pageIndex', defaultParams.pageIndex.toString());
+    params = params.append('pageSize', defaultParams.pageSize.toString());
+
+    return this.http.get(this.baseUrl + ApiUrl.Building.GetUserAppartaments, {observe: 'response', params}).pipe(
+      map((res: HttpResponse<IPagination>) => res.body)
+    );
+  }
+
+  sellAppartaments(appartamentId: number): Observable<boolean> {
+    return this.http.delete(this.baseUrl + ApiUrl.Building.SellAppartament.replace(':id', appartamentId.toString()), {}).pipe(
+      map((res: boolean) => res)
+    );
+  }
 }
