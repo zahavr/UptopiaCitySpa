@@ -1,5 +1,5 @@
 ﻿using API.Dto;
-using API.Errors;
+using Infrastructure.Erros;
 using API.Helpers;
 using API.Presentation;
 using Core.Specification;

@@ -1,5 +1,5 @@
 ﻿using API.Dto.WorkDto;
-using API.Errors;
+using Infrastructure.Erros;
 using API.Presentation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
