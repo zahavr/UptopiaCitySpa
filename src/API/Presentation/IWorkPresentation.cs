@@ -1,5 +1,5 @@
 ﻿using API.Dto.WorkDto;
-using API.Errors;
+using Infrastructure.Erros;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;

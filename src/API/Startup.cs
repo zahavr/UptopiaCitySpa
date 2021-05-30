@@ -1,5 +1,4 @@
 using API.Extensions;
-using API.Helpers.MapperProfiles;
 using API.Hubs;
 using API.Hubs.Helpers;
 using API.Middleware;
@@ -62,6 +61,7 @@ namespace API
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<LoggerMiddleware>();
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseStatusCodePagesWithReExecute("/errors/{0}");

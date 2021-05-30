@@ -32,6 +32,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "client", "src\client\", "{F
 		SlnRelativePath = "src\client\"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telegram", "Telegram\Telegram.csproj", "{EE224719-D98A-4A5D-87A8-93178A46A4D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,10 @@ Global
 		{FA73BD57-61D1-4898-97D9-1AD2452F7CB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA73BD57-61D1-4898-97D9-1AD2452F7CB5}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{FA73BD57-61D1-4898-97D9-1AD2452F7CB5}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{EE224719-D98A-4A5D-87A8-93178A46A4D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE224719-D98A-4A5D-87A8-93178A46A4D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE224719-D98A-4A5D-87A8-93178A46A4D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE224719-D98A-4A5D-87A8-93178A46A4D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +69,7 @@ Global
 		{0BC46E2B-827E-4FA2-A95D-DD212753D8F1} = {62842296-2F0C-4A9F-A8E3-E7F29966BA3A}
 		{DDF71FDD-2467-44D8-9CB1-73FB73C7A497} = {62842296-2F0C-4A9F-A8E3-E7F29966BA3A}
 		{FA73BD57-61D1-4898-97D9-1AD2452F7CB5} = {62842296-2F0C-4A9F-A8E3-E7F29966BA3A}
+		{EE224719-D98A-4A5D-87A8-93178A46A4D6} = {62842296-2F0C-4A9F-A8E3-E7F29966BA3A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19BE195E-05C7-4C8A-8DCC-C40EF6FE99B4}
