@@ -1,5 +1,5 @@
 ﻿using API.Dto.BuildingDto;
-using API.Errors;
+using Infrastructure.Erros;
 using API.Extensions;
 using API.Helpers;
 using API.Presentation;

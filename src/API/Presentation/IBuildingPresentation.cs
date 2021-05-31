@@ -1,5 +1,5 @@
 ﻿using API.Dto.BuildingDto;
-using API.Errors;
+using Infrastructure.Erros;
 using API.Helpers;
 using Core.Entities.Identity;
 using Core.Specification;

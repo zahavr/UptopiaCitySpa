@@ -1,15 +1,18 @@
-﻿namespace API.Errors
+﻿using Microsoft.Extensions.Logging;
+
+namespace Infrastructure.Erros
 {
 	public class ApiResponse
 	{
-		public ApiResponse(int statusCode, string message = null)
+		public ApiResponse(int statusCode, string message = null, string path = null)
 		{
 			StatusCode = statusCode;
+			Path = path;
 			Message = message ?? GetMessageForStatusCode(statusCode);
 		}
 		public int StatusCode { get; set; }
 		public string Message { get; set; }
-
+		public string Path {get; set;}
 		private string GetMessageForStatusCode(int statusCode)
 		{
 			return statusCode switch

@@ -1,5 +1,5 @@
 ﻿using API.Dto.WorkDto;
-using API.Errors;
+using Infrastructure.Erros;
 using API.Extensions;
 using AutoMapper;
 using Core;

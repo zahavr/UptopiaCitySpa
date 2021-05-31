@@ -1,6 +1,10 @@
 using API.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using NLog;
+using NLog.Web;
+using System;
 using System.Threading.Tasks;
 
 namespace API
@@ -9,11 +13,25 @@ namespace API
     {
         public async static Task Main(string[] args)
         {
-			IHost host = CreateHostBuilder(args).Build();
+			Logger logger = NLogBuilder.ConfigureNLog("NLog.config").GetCurrentClassLogger();
 
-            await host.ApplyMigrations();
+			try
+			{
+                logger.Debug("Start application...");
+                IHost host = CreateHostBuilder(args).Build();
 
-            host.Run();
+                await host.ApplyMigrations();
+
+                host.Run();
+            }
+            catch(Exception ex)
+            { 
+                logger.Error(ex, ex.Message);
+            }
+			finally
+			{
+                LogManager.Shutdown();
+			}
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -21,6 +39,11 @@ namespace API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+                .ConfigureLogging(logging => {
+                    logging.ClearProviders();
+                    logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+                })
+                .UseNLog();
     }
 }

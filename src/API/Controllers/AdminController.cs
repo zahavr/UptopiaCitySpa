@@ -1,5 +1,5 @@
 ﻿using API.Dto;
-using API.Errors;
+using Infrastructure.Erros;
 using AutoMapper;
 using Core.Entities.Identity;
 using Microsoft.AspNetCore.Authorization;
